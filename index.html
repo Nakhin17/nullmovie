@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Optimization -->
+    <title>MovieHub - ดูหนังออนไลน์ฟรี ซีรีส์ฟรี อัปเดตใหม่ทุกวัน</title>
+    <meta name="description" content="ศูนย์รวมความบันเทิง ดูหนังออนไลน์ฟรี ซีรีส์ฝรั่ง ซีรีส์เกาหลี อนิเมะ พากย์ไทย ซับไทย ภาพคมชัด HD ไม่มีโฆษณากวนใจ อัปเดตใหม่ล่าสุด 2026">
+    <meta name="keywords" content="ดูหนังออนไลน์, ดูหนังฟรี, หนังใหม่ 2026, ซีรีส์ฟรี, ดูซีรีส์ออนไลน์, ดูหนัง HD, moviehub">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph (Facebook / LINE / Discord) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MovieHub - ดูหนังออนไลน์ฟรี ซีรีส์ฟรี อัปเดตใหม่ทุกวัน">
+    <meta property="og:description" content="ดูหนังออนไลน์ฟรี ซีรีส์ฝรั่ง เกาหลี อนิเมะ ภาพคมชัด HD ไม่มีโฆษณาคั่น">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80">
+    <meta property="og:url" content="https://moviehub.vercel.app">
+
+    <!-- Tailwind CSS & Lucide Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+        /* Aspect Ratio for Responsive Iframe */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header Navbar -->
+    <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a href="#" onclick="goHome(event)" class="flex items-center gap-2 text-red-500 font-bold text-2xl tracking-wider">
+                <i data-lucide="clapperboard" class="w-8 h-8"></i>
+                <span>MOVIE<span class="text-white">HUB</span></span>
+            </a>
+
+            <!-- Search Bar Form -->
+            <form onsubmit="handleSearch(event)" class="relative flex-1 max-w-md w-full">
+                <input type="text" id="searchInput" placeholder="ค้นหาหนัง ซีรีส์ หรืออนิเมะ..." 
+                    class="w-full bg-gray-900/80 text-gray-200 pl-11 pr-4 py-2 rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </div>
+            </form>
+
+            <!-- Navigation Menu -->
+            <nav class="flex items-center gap-6 text-sm font-medium">
+                <button onclick="setCategory('all')" class="nav-link text-red-500 transition-colors">หน้าแรก</button>
+                <button onclick="setCategory('movie')" class="nav-link hover:text-red-500 text-gray-300 transition-colors">ภาพยนตร์</button>
+                <button onclick="setCategory('tv')" class="nav-link hover:text-red-500 text-gray-300 transition-colors">ซีรีส์/ทีวีโชว์</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Dynamic Wrapper -->
+    <main class="flex-1">
+        <!-- Hero Section (Featured Movies) - Will hidden when search -->
+        <section id="heroSection" class="relative min-h-[400px] md:min-h-[550px] flex items-center justify-start overflow-hidden mb-8">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-[#0b0f19]/70 to-transparent z-10"></div>
+            <div id="heroBg" class="absolute inset-0 bg-cover bg-center transition-all duration-700 scale-105" style="background-image: url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1600&q=80');"></div>
+            
+            <div class="container mx-auto px-4 z-20 max-w-2xl text-left">
+                <div class="inline-flex items-center gap-2 bg-red-600/20 text-red-400 border border-red-600/30 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> หนังแนะนำวันนี้
+                </div>
+                <h1 id="heroTitle" class="text-3xl md:text-5xl font-bold mb-3 text-white drop-shadow">กำลังโหลดข้อมูลหนังแนะนำ...</h1>
+                <p id="heroOverview" class="text-gray-300 text-sm md:text-base mb-6 line-clamp-3 md:line-clamp-4 leading-relaxed">
+                    พบกับศูนย์รวมภาพยนตร์และซีรีส์ฟรีแบบจัดเต็ม ไม่ว่าจะเป็นหนังชนโรง หนังเก่าสุดคลาสสิก หรือซีรีส์สุดฮิตในสตรีมมิ่ง ค้นหาและรับชมได้ทันทีโดยไม่ต้องลงทะเบียน
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <button id="heroPlayBtn" class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-lg hover:shadow-red-600/30">
+                        <i data-lucide="play" class="fill-current w-5 h-5"></i> รับชมเลยตอนนี้
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Embedded Video Player Area -->
+        <section id="playerArea" class="container mx-auto px-4 mb-8 hidden">
+            <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-2xl">
+                <!-- Video Container -->
+                <div class="video-container">
+                    <iframe id="videoIframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                </div>
+                
+                <!-- Player controls / details -->
+                <div class="p-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                        <div>
+                            <h2 id="playerTitle" class="text-2xl font-bold text-white mb-1">กำลังรับชมภาพยนตร์</h2>
+                            <p id="playerSubtitle" class="text-sm text-gray-400">สลับแหล่งเล่น (Player Source) ด้านล่าง หากไม่สามารถรับชมได้</p>
+                        </div>
+                        <!-- Source switcher -->
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="changeSource('vidsrc')" id="btnSrcVidsrc" class="bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition">Source 1 (Vidsrc)</button>
+                            <button onclick="changeSource('vidlink')" id="btnSrcVidlink" class="bg-gray-800 text-gray-300 text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-gray-700 transition">Source 2 (Vidlink)</button>
+                            <button onclick="changeSource('vidsrc_xyz')" id="btnSrcXyz" class="bg-gray-800 text-gray-300 text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-gray-700 transition">Source 3 (Super)</button>
+                        </div>
+                    </div>
+
+                    <!-- Series Selector (Ep/Season dropdowns) - Shows only on Series -->
+                    <div id="seriesSelector" class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-950 p-4 rounded-lg border border-gray-800 mb-4 hidden">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">ซีซัน (Season)</label>
+                            <select id="seasonSelect" onchange="onSeasonChange()" class="w-full bg-gray-900 border border-gray-700 text-white rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-red-500"></select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">ตอนที่ (Episode)</label>
+                            <select id="episodeSelect" onchange="onEpisodeChange()" class="w-full bg-gray-900 border border-gray-700 text-white rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-red-500"></select>
+                        </div>
+                    </div>
+
+                    <!-- Meta details -->
+                    <div class="border-t border-gray-800 pt-4 flex flex-wrap gap-6 text-sm text-gray-300">
+                        <span id="playerMetaDate" class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-red-500"></i> -</span>
+                        <span id="playerMetaRating" class="flex items-center gap-1.5"><i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-current"></i> -</span>
+                        <span id="playerMetaType" class="flex items-center gap-1.5"><i data-lucide="film" class="w-4 h-4 text-blue-500"></i> -</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search / Results Title Area -->
+        <section class="container mx-auto px-4 mb-4">
+            <h2 id="sectionTitle" class="text-xl md:text-2xl font-semibold flex items-center gap-2 border-l-4 border-red-600 pl-3">
+                <i data-lucide="trending-up" class="w-6 h-6 text-red-500"></i>
+                <span>ภาพยนตร์ยอดนิยมในตอนนี้</span>
+            </h2>
+        </section>
+
+        <!-- Movie Grid Area -->
+        <section class="container mx-auto px-4 mb-16">
+            <div id="movieGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                <!-- Movie Card Template (Placeholder when loading) -->
+                <div class="animate-pulse bg-gray-900 rounded-lg overflow-hidden h-72"></div>
+                <div class="animate-pulse bg-gray-900 rounded-lg overflow-hidden h-72"></div>
+                <div class="animate-pulse bg-gray-900 rounded-lg overflow-hidden h-72"></div>
+                <div class="animate-pulse bg-gray-900 rounded-lg overflow-hidden h-72"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Information -->
+    <footer class="bg-gray-950 border-t border-gray-800 py-8 text-center text-gray-500 text-xs">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center gap-2 text-red-500 font-bold text-lg mb-4">
+                <i data-lucide="clapperboard" class="w-6 h-6"></i>
+                <span>MOVIEHUB</span>
+            </div>
+            <p class="max-w-xl mx-auto mb-4 leading-relaxed text-gray-400">
+                เว็บไซต์นี้พัฒนาขึ้นเพื่อความบันเทิงและการทดสอบฝีมือในการเขียนโปรแกรม โดยดึง API แหล่งข้อมูลแบบสาธารณะมาจำลองการเล่นเนื้อหา
+            </p>
+            <p>&copy; 2026 MovieHub. All Rights Reserved. Powered by TMDB & GitHub & Vercel.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // ใช้ TMDB API Key แบบ Read-Only ที่จัดเตรียมไว้ให้เพื่อความสะดวกในการสาธิต
+        // แนะนำให้สมัครที่ themoviedb.org และเปลี่ยนเป็นของตัวเองในภายหลังเพื่อความสถียร
+        const TMDB_API_KEY = "834c449339a9c8eb4ca98a08a287233f"; 
+        const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+        const IMG_PATH = "https://image.tmdb.org/t/p/w500";
+        const BACKDROP_PATH = "https://image.tmdb.org/t/p/original";
+
+        // Application State
+        let currentMediaType = 'all'; // all, movie, tv
+        let currentQuery = '';
+        let selectedMovie = null;
+        let selectedSource = 'vidsrc'; // vidsrc, vidlink, vidsrc_xyz
+        let currentSeason = 1;
+        let currentEpisode = 1;
+
+        // Initialize application
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            fetchTrendingAndHero();
+        });
+
+        // 1. Fetch Trending movies and render Hero + Movie Grid
+        async function fetchTrendingAndHero() {
+            try {
+                // Fetch trending list
+                const res = await fetch(`${TMDB_BASE_URL}/trending/all/week?api_key=${TMDB_API_KEY}&language=th-TH`);
+                const data = await res.json();
+                const items = data.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
+
+                if (items && items.length > 0) {
+                    // Set Hero Movie (item[0])
+                    const hero = items[0];
+                    setupHero(hero);
+                    
+                    // Render rest to grid
+                    renderGrid(items, "ภาพยนตร์และซีรีส์ยอดนิยมประจำสัปดาห์");
+                }
+            } catch (error) {
+                console.error("Error fetching trending metadata:", error);
+                showErrorMessage();
+            }
+        }
+
+        // Setup featured Hero Banner
+        function setupHero(movie) {
+            const title = movie.title || movie.name || "ไม่มีชื่อเรื่อง";
+            const overview = movie.overview || "ไม่มีรายละเอียดภาษาไทยสำหรับเรื่องนี้ในระบบฐานข้อมูลหลัก";
+            const backdrop = movie.backdrop_path ? `${BACKDROP_PATH}${movie.backdrop_path}` : 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1600&q=80';
+            
+            document.getElementById('heroBg').style.backgroundImage = `url('${backdrop}')`;
+            document.getElementById('heroTitle').innerText = title;
+            document.getElementById('heroOverview').innerText = overview;
+
+            const playBtn = document.getElementById('heroPlayBtn');
+            // When play btn is clicked inside hero banner
+            playBtn.onclick = () => {
+                playMedia(movie.id, movie.media_type || 'movie', title, movie.release_date || movie.first_air_date, movie.vote_average);
+            };
+        }
+
+        // 2. Search Movie and Series
+        async function handleSearch(e) {
+            e.preventDefault();
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            currentQuery = query;
+            document.getElementById('heroSection').classList.add('hidden'); // Hide banner while search
+            document.getElementById('sectionTitle').innerHTML = `
+                <i data-lucide="search" class="w-6 h-6 text-red-500"></i> ผลการค้นหาสำหรับ: <span class="text-red-500 ml-1">"${query}"</span>
+            `;
+            lucide.createIcons();
+
+            try {
+                const res = await fetch(`${TMDB_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=th-TH`);
+                const data = await res.json();
+                const results = data.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
+                renderGrid(results, `ผลการค้นหาสำหรับ "${query}"`);
+            } catch (error) {
+                console.error("Search error:", error);
+            }
+        }
+
+        // 3. Filter Movie or Series category
+        async function setCategory(type) {
+            currentMediaType = type;
+            currentQuery = '';
+            document.getElementById('searchInput').value = '';
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('text-red-500'));
+            
+            if (type === 'all') {
+                navLinks[0].classList.add('text-red-500');
+                document.getElementById('heroSection').classList.remove('hidden');
+                fetchTrendingAndHero();
+            } else {
+                if (type === 'movie') navLinks[1].classList.add('text-red-500');
+                if (type === 'tv') navLinks[2].classList.add('text-red-500');
+                
+                document.getElementById('heroSection').classList.add('hidden');
+                
+                try {
+                    const res = await fetch(`${TMDB_BASE_URL}/${type}/popular?api_key=${TMDB_API_KEY}&language=th-TH&page=1`);
+                    const data = await res.json();
+                    
+                    // Standardize result object format
+                    const formatted = data.results.map(item => ({ ...item, media_type: type }));
+                    const label = type === 'movie' ? 'รวมภาพยนตร์มาแรง' : 'รวมซีรีส์/รายการทีวียอดฮิต';
+                    renderGrid(formatted, label);
+                } catch (error) {
+                    console.error("Filter category failed:", error);
+                }
+            }
+        }
+
+        // Return Home state
+        function goHome(e) {
+            e.preventDefault();
+            setCategory('all');
+            document.getElementById('playerArea').classList.add('hidden');
+            document.getElementById('videoIframe').src = '';
+        }
+
+        // 4. Render Grid Interface
+        function renderGrid(movies, titleText) {
+            const grid = document.getElementById('movieGrid');
+            const titleEl = document.getElementById('sectionTitle');
+            
+            // Set Section Title Text
+            titleEl.querySelector('span').innerText = titleText;
+
+            if (movies.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center text-gray-500">
+                        <i data-lucide="frown" class="w-16 h-16 mx-auto mb-4 text-gray-600"></i>
+                        <p class="text-lg">ขออภัย ไม่พบรายการภาพยนตร์ที่คุณค้นหา</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            grid.innerHTML = movies.map(item => {
+                const title = item.title || item.name || "ไม่มีชื่อเรื่อง";
+                const posterUrl = item.poster_path ? `${IMG_PATH}${item.poster_path}` : 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=500&q=80';
+                const typeLabel = item.media_type === 'tv' ? 'ซีรีส์' : 'ภาพยนตร์';
+                const typeColor = item.media_type === 'tv' ? 'bg-blue-600' : 'bg-red-600';
+                const rating = item.vote_average ? item.vote_average.toFixed(1) : 'N/A';
+                const rawDate = item.release_date || item.first_air_date || '';
+                const year = rawDate ? rawDate.split('-')[0] : 'N/A';
+
+                return `
+                    <div onclick="playMedia(${item.id}, '${item.media_type}', '${title.replace(/'/g, "\\'")}', '${rawDate}', ${item.vote_average})" 
+                        class="group cursor-pointer bg-gray-900 rounded-lg overflow-hidden border border-gray-800 hover:border-red-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-red-500/10">
+                        <div class="relative aspect-[2/3] overflow-hidden">
+                            <img src="${posterUrl}" alt="${title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <!-- Type Badge -->
+                            <span class="absolute top-2 left-2 ${typeColor} text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                                ${typeLabel}
+                            </span>
+                            <!-- Rating Badge -->
+                            <span class="absolute bottom-2 right-2 bg-black/80 backdrop-blur-sm text-yellow-400 text-xs font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i> ${rating}
+                            </span>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-medium text-sm text-gray-200 line-clamp-1 group-hover:text-red-500 transition-colors">${title}</h3>
+                            <p class="text-xs text-gray-500 mt-1">${year}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        // 5. Play Selected Media
+        async function playMedia(id, type, title, releaseDate, rating) {
+            selectedMovie = { id, type, title, releaseDate, rating };
+            
+            // Scroll to view player smoothly
+            const playerArea = document.getElementById('playerArea');
+            playerArea.classList.remove('hidden');
+            playerArea.scrollIntoView({ behavior: 'smooth' });
+
+            // Display metadata details
+            document.getElementById('playerTitle').innerText = title;
+            document.getElementById('playerMetaDate').innerHTML = `<i data-lucide="calendar" class="w-4 h-4 text-red-500"></i> ${releaseDate || 'ไม่ระบุวันฉาย'}`;
+            document.getElementById('playerMetaRating').innerHTML = `<i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-current"></i> ${rating ? rating.toFixed(1) : '0.0'}/10`;
+            document.getElementById('playerMetaType').innerHTML = `<i data-lucide="film" class="w-4 h-4 text-blue-500"></i> ${type === 'tv' ? 'ซีรีส์ / TV Show' : 'ภาพยนตร์ HD'}`;
+
+            // Handle series vs movies selector state
+            const seriesSelector = document.getElementById('seriesSelector');
+            if (type === 'tv') {
+                seriesSelector.classList.remove('hidden');
+                await setupSeriesEpisodes(id);
+            } else {
+                seriesSelector.classList.add('hidden');
+                updatePlayerUrl();
+            }
+
+            lucide.createIcons();
+        }
+
+        // Fetch details for series (seasons and episodes count)
+        async function setupSeriesEpisodes(tvId) {
+            try {
+                const res = await fetch(`${TMDB_BASE_URL}/tv/${tvId}?api_key=${TMDB_API_KEY}&language=th-TH`);
+                const data = await res.json();
+                
+                const seasonSelect = document.getElementById('seasonSelect');
+                seasonSelect.innerHTML = '';
+                
+                // Keep only valid seasons (some TV shows have season 0 for specials)
+                const validSeasons = data.seasons.filter(s => s.season_number > 0);
+                
+                if (validSeasons.length === 0 && data.seasons.length > 0) {
+                    validSeasons.push(data.seasons[0]);
+                }
+
+                validSeasons.forEach(season => {
+                    const opt = document.createElement('option');
+                    opt.value = season.season_number;
+                    opt.text = `${season.name} (${season.episode_count} ตอน)`;
+                    seasonSelect.appendChild(opt);
+                });
+
+                currentSeason = validSeasons[0] ? validSeasons[0].season_number : 1;
+                await updateEpisodesList(tvId, currentSeason);
+
+            } catch (error) {
+                console.error("Error setting up series episodes dropdown:", error);
+            }
+        }
+
+        // Update Episodes dropdown list
+        async function updateEpisodesList(tvId, seasonNum) {
+            try {
+                const res = await fetch(`${TMDB_BASE_URL}/tv/${tvId}/season/${seasonNum}?api_key=${TMDB_API_KEY}&language=th-TH`);
+                const data = await res.json();
+
+                const episodeSelect = document.getElementById('episodeSelect');
+                episodeSelect.innerHTML = '';
+
+                data.episodes.forEach(ep => {
+                    const opt = document.createElement('option');
+                    opt.value = ep.episode_number;
+                    opt.text = `ตอนที่ ${ep.episode_number} : ${ep.name || 'ไม่มีชื่อตอน'}`;
+                    episodeSelect.appendChild(opt);
+                });
+
+                currentEpisode = 1;
+                updatePlayerUrl();
+            } catch (error) {
+                console.error("Error updating episodes dropdown:", error);
+            }
+        }
+
+        // Listen Season Change
+        function onSeasonChange() {
+            currentSeason = document.getElementById('seasonSelect').value;
+            updateEpisodesList(selectedMovie.id, currentSeason);
+        }
+
+        // Listen Episode Change
+        function onEpisodeChange() {
+            currentEpisode = document.getElementById('episodeSelect').value;
+            updatePlayerUrl();
+        }
+
+        // 6. Source Player Swapping Mechanism
+        function changeSource(source) {
+            selectedSource = source;
+            
+            // Toggle highlight active button classes
+            const btnVidsrc = document.getElementById('btnSrcVidsrc');
+            const btnVidlink = document.getElementById('btnSrcVidlink');
+            const btnXyz = document.getElementById('btnSrcXyz');
+
+            [btnVidsrc, btnVidlink, btnXyz].forEach(btn => {
+                btn.className = "bg-gray-800 text-gray-300 text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-gray-700 transition";
+            });
+
+            if (source === 'vidsrc') btnVidsrc.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
+            if (source === 'vidlink') btnVidlink.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
+            if (source === 'vidsrc_xyz') btnXyz.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
+
+            updatePlayerUrl();
+        }
+
+        // Update exact URL for iframe source
+        function updatePlayerUrl() {
+            if (!selectedMovie) return;
+            const iframe = document.getElementById('videoIframe');
+            let url = '';
+
+            const { id, type } = selectedMovie;
+
+            if (type === 'movie') {
+                if (selectedSource === 'vidsrc') {
+                    url = `https://vidsrc.to/embed/movie/${id}`;
+                } else if (selectedSource === 'vidlink') {
+                    url = `https://vidlink.pro/embed/movie/${id}`;
+                } else {
+                    url = `https://vidsrc.xyz/embed/movie?tmdb=${id}`;
+                }
+            } else { // series / tv show
+                if (selectedSource === 'vidsrc') {
+                    url = `https://vidsrc.to/embed/tv/${id}/${currentSeason}/${currentEpisode}`;
+                } else if (selectedSource === 'vidlink') {
+                    url = `https://vidlink.pro/embed/tv/${id}/${currentSeason}/${currentEpisode}`;
+                } else {
+                    url = `https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${currentSeason}&episode=${currentEpisode}`;
+                }
+            }
+
+            iframe.src = url;
+        }
+
+        // Error Feedback placeholder UI
+        function showErrorMessage() {
+            document.getElementById('movieGrid').innerHTML = `
+                <div class="col-span-full py-16 text-center text-gray-400">
+                    <p class="text-lg">มีปัญหาในการเชื่อมต่อข้อมูล กรุณาลองใหม่อีกครั้งในภายหลัง</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
