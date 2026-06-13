@@ -91,7 +91,7 @@
                     </span>
                 </div>
 
-                <!-- Status HUD & Search (ซ่อนส่วนควบคุมตั้งค่าสตรีมเซิร์ฟเวอร์ เพื่อไม่ให้บุคคลอื่นเข้าถึงได้) -->
+                <!-- Status HUD & Search (ปิดอินเตอร์เฟสความลับด้านสตรีมของเซิร์ฟเวอร์เจ้าของเว็บ) -->
                 <div class="flex items-center space-x-4">
                     <!-- Status Indicator -->
                     <div id="connectionStatus" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/40 text-[10px] font-cyber tracking-wider">
@@ -112,6 +112,20 @@
 
     <!-- MAIN CONTAINER -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full relative z-10">
+
+        <!-- BYPASS WARNING INFO BANNER -->
+        <div id="ngrokBypassBanner" class="hidden mb-6 bg-cyan-950/40 border border-cyan-500/30 rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-exclamation text-cyan-400 text-2xl animate-pulse shrink-0"></i>
+                <div class="text-xs text-slate-300">
+                    <p class="font-bold uppercase tracking-wider font-cyber text-cyan-400">วิธีเปิดใช้การรับชมผ่านอุโมงค์ Ngrok</p>
+                    <p>เนื่องจาก Ngrok มีระบบความปลอดภัยส่วนบุคคล ผู้ชมและเพื่อนๆ จำเป็นต้องคลิกลิงก์ปลดล็อคด้านขวาเพื่อกด **"Visit Site"** เพียงหนึ่งครั้ง จากนั้นจะสามารถเล่นหนังได้ทันที!</p>
+                </div>
+            </div>
+            <a href="https://coat-straw-puzzling.ngrok-free.dev" target="_blank" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-cyber font-bold text-[10px] tracking-wider px-4 py-2 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.3)] shrink-0 transition-all">
+                UNLOCK_STREAM.EXE <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+            </a>
+        </div>
 
         <!-- ================= HOME TAB ================= -->
         <div id="homeTab" class="tab-content transition-opacity duration-300">
@@ -324,13 +338,18 @@
         async function checkBackendStatus() {
             const statusBadge = document.getElementById('connectionStatus');
             const labelBadge = document.getElementById('bridgeStatusLabel');
+            const bypassBanner = document.getElementById('ngrokBypassBanner');
             
             try {
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 4000);
 
+                // ส่งคำขอข้ามหน้าเตือนความปลอดภัยของ Ngrok ด้วย Header พิเศษ
                 const response = await fetch(`${apiBaseUrl}/api/status`, { 
                     method: 'GET',
+                    headers: {
+                        'ngrok-skip-browser-warning': '69420'
+                    },
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId);
@@ -343,6 +362,7 @@
                     `;
                     labelBadge.innerHTML = "สตรีมตรงจากไดรฟ์ G:\\Program\\Movie ในคอมพิวเตอร์ของคุณสำเร็จ";
                     labelBadge.className = "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider";
+                    bypassBanner.classList.add('hidden');
                 } else {
                     throw new Error("Server response error");
                 }
@@ -354,6 +374,9 @@
                 `;
                 labelBadge.innerHTML = "กำลังใช้งานคลังข้อมูลจำลอง (โปรดรันเซิร์ฟเวอร์คอมพิวเตอร์ของคุณ)";
                 labelBadge.className = "bg-pink-500/10 text-pink-400 border border-pink-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider";
+                
+                // แสดงแบนเนอร์ช่วยคลิกปลดล็อคเมื่อไม่พบเซิร์ฟเวอร์ออฟไลน์
+                bypassBanner.classList.remove('hidden');
             }
         }
 
@@ -361,7 +384,11 @@
         async function fetchMovies() {
             if (isBackendOnline) {
                 try {
-                    const response = await fetch(`${apiBaseUrl}/api/movies`);
+                    const response = await fetch(`${apiBaseUrl}/api/movies`, {
+                        headers: {
+                            'ngrok-skip-browser-warning': '69420'
+                        }
+                    });
                     if (response.ok) {
                         movies = await response.json();
                         return;
