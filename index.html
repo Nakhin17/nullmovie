@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NullMovie - Quantum Private Streaming Portal</title>
+    <title>NullMovie - Private Quantum Streaming Portal</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -57,7 +57,7 @@
             border-color: rgba(217, 70, 239, 0.8);
         }
 
-        /* Custom Scrollbar for space vibe */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -81,7 +81,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
-                <div class="flex items-center space-x-2 cursor-pointer" onclick="handleLogoClick()">
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="changeTab('home')">
                     <span class="text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 font-cyber flex items-center gap-2">
                         <span class="relative">
                             <i class="fa-solid fa-atom text-cyan-400 animate-spin" style="animation-duration: 8s;"></i>
@@ -91,18 +91,24 @@
                     </span>
                 </div>
 
-                <!-- Status HUD & Search Bar -->
-                <div class="flex items-center space-x-4">
-                    <!-- Status Badge -->
-                    <div id="connectionStatus" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md border border-slate-800 bg-slate-900/40 text-[10px] font-cyber tracking-wider">
+                <!-- Control Buttons -->
+                <div class="flex items-center space-x-3">
+                    <!-- Config Connection Settings -->
+                    <button onclick="toggleBridgeModal()" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 border border-cyan-500/30 hover:border-cyan-400 text-cyan-400 px-3 py-1.5 rounded-lg text-xs font-cyber transition-all">
+                        <i class="fa-solid fa-circle-nodes animate-pulse"></i>
+                        <span class="hidden md:inline">SERVER BRIDGE</span>
+                    </button>
+
+                    <!-- Status Indicator -->
+                    <div id="connectionStatus" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/40 text-[10px] font-cyber tracking-wider">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
-                        <span>CHECKING SERVER LINK...</span>
+                        <span>CHECKING BRIDGE...</span>
                     </div>
 
-                    <!-- Search Bar -->
-                    <div class="relative">
+                    <!-- Search -->
+                    <div class="relative hidden sm:block">
                         <input type="text" id="searchInput" oninput="searchMovies()" placeholder="ค้นหารายการ..." 
-                               class="bg-slate-950/90 text-cyan-400 border border-slate-800 placeholder-slate-600 pl-10 pr-4 py-2 rounded-lg text-xs font-cyber tracking-wider focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 w-36 sm:w-56 transition-all duration-300">
+                               class="bg-slate-950/90 text-cyan-400 border border-slate-800 placeholder-slate-600 pl-10 pr-4 py-2 rounded-lg text-xs font-cyber tracking-wider focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 w-44 transition-all">
                         <i class="fa-solid fa-terminal absolute left-3.5 top-3 text-cyan-500/50 text-xs"></i>
                     </div>
                 </div>
@@ -113,6 +119,15 @@
     <!-- MAIN CONTAINER -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full relative z-10">
         
+        <!-- WARNING MESSAGE ON MIXED CONTENT / NOT SECURE LOCALHOST -->
+        <div id="mixedContentWarning" class="hidden mb-6 bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 flex gap-3 items-center">
+            <i class="fa-solid fa-triangle-exclamation text-amber-500 text-xl animate-bounce"></i>
+            <div class="text-xs text-amber-300">
+                <p class="font-bold uppercase tracking-wider font-cyber">Mixed Content Block Warning</p>
+                <p>เนื่องจากเว็บถูกโหลดผ่านสตรีมปลอดภัย (HTTPS) เบราว์เซอร์อาจสกัดกั้นการเชื่อมต่อแบบ HTTP ไปยังเครื่องของคุณ วิธีแก้: ใช้ HTTPS Tunnel (Ngrok) หรือคลิกรูปโล่ที่แถบ Address เพื่อ "Allow Unsafe Scripts"</p>
+            </div>
+        </div>
+
         <!-- ================= HOME TAB ================= -->
         <div id="homeTab" class="tab-content transition-opacity duration-300">
             <!-- Hero Banner -->
@@ -121,18 +136,18 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent"></div>
                 
                 <div class="absolute top-6 right-6 font-cyber text-[10px] text-cyan-400/40 hidden md:block text-right pointer-events-none leading-relaxed">
-                    <p>PORTAL STATUS: ACTIVE</p>
-                    <p>GRID RESOLUTION: 4K HIGH BITRATE</p>
-                    <p>DECODER: HTML5 ENGINE</p>
+                    <p>SYSTEM STATUS: SECURE NETWORK</p>
+                    <p>PORTAL URL: nullmovie.vercel.app</p>
+                    <p>DECODER: ACCELERATED VIDEO ENGINE</p>
                 </div>
 
                 <div class="relative z-10 max-w-2xl">
                     <div class="flex items-center gap-2 mb-4">
                         <span class="bg-red-500/10 text-red-400 border border-red-500/30 text-[10px] font-cyber font-bold px-3 py-1 rounded tracking-widest uppercase">QUANTUM ACTIVE</span>
-                        <span class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider">LOCAL REPOS-SERVER</span>
+                        <span id="bridgeStatusLabel" class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider">CONNECTING TO COMPUTER STORAGE...</span>
                     </div>
-                    <h1 class="text-4xl md:text-5xl font-black mt-3 text-white tracking-tight leading-none font-cyber uppercase" id="featuredTitle">กำลังโหลดภาพยนตร์นำเสนอหลัก...</h1>
-                    <p class="text-slate-400 mt-4 text-sm md:text-base line-clamp-3 leading-relaxed" id="featuredDesc">ยินดีต้อนรับเข้าสู่พอร์ทัลสตรีมมิ่งความเร็วสูงระดับส่วนตัวของคุณ</p>
+                    <h1 class="text-4xl md:text-5xl font-black mt-3 text-white tracking-tight leading-none font-cyber uppercase animate-pulse" id="featuredTitle">กำลังดึงฐานข้อมูลหนัง...</h1>
+                    <p class="text-slate-400 mt-4 text-sm md:text-base line-clamp-3 leading-relaxed" id="featuredDesc">ยินดีต้อนรับเข้าสู่ระบบพอร์ทัลสตรีมมิ่งความเร็วสูงที่ดึงข้อมูลจากเครื่องคอมพิวเตอร์ของคุณโดยตรง</p>
                     
                     <div class="mt-8 flex flex-wrap gap-4">
                         <button onclick="playFeatured()" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 px-8 py-3.5 rounded-lg font-black font-cyber tracking-widest flex items-center gap-3 transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_25px_rgba(6,182,212,0.4)]">
@@ -147,7 +162,7 @@
 
             <!-- Category Filter Chips -->
             <div class="mb-10">
-                <p class="text-[10px] font-cyber text-cyan-400/70 uppercase tracking-widest mb-3"><i class="fa-solid fa-network-wired"></i> จัดเรียงตามหมวดหมู่โฟลเดอร์ในเครือข่าย :</p>
+                <p class="text-[10px] font-cyber text-cyan-400/70 uppercase tracking-widest mb-3"><i class="fa-solid fa-folder-open"></i> เลือกหมวดหมู่โฟลเดอร์คอมพิวเตอร์ของคุณ :</p>
                 <div class="flex space-x-3 overflow-x-auto py-2" id="categoryChips">
                     <!-- Dynamic category chips will go here -->
                 </div>
@@ -158,10 +173,10 @@
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-slate-800 pb-5">
                     <div>
                         <h2 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 font-cyber tracking-wide" id="movieListTitle">CORE_GRID.EXE</h2>
-                        <p class="text-xs text-slate-500 font-cyber tracking-wider uppercase mt-1">AVAILABLE ARCHIVES ON LOCAL QUANTUM NET</p>
+                        <p class="text-xs text-slate-500 font-cyber tracking-wider uppercase mt-1">รายการหนังในคอมพิวเตอร์ของคุณ จัดเรียงตามโฟลเดอร์และชื่อไฟล์อย่างเรียบร้อย</p>
                     </div>
                     <div class="flex items-center gap-3 font-cyber text-xs">
-                        <span class="bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 px-3 py-1.5 rounded-md" id="movieCount">ITEMS COUNTED: 00</span>
+                        <span class="bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 px-3 py-1.5 rounded-md" id="movieCount">ITEMS: 00</span>
                     </div>
                 </div>
                 
@@ -205,7 +220,7 @@
                         <!-- Left Story Info -->
                         <div class="lg:col-span-2 space-y-3">
                             <h3 class="text-sm font-cyber text-slate-500 tracking-wider uppercase">ARCHIVE_DETAILS.TXT</h3>
-                            <p class="text-slate-300 leading-relaxed text-sm md:text-base" id="playDesc">รายละเอียดที่ได้จากการสแกน...</p>
+                            <p class="text-slate-300 leading-relaxed text-sm md:text-base" id="playDesc">รายละเอียดไฟล์จากการสแกน...</p>
                         </div>
 
                         <!-- Right Tech Specs Display (Sci-Fi Aesthetics) -->
@@ -222,8 +237,8 @@
                                 <span class="text-pink-400">MP4, TS, MKV, AVI Active</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-500">QUANTUM PORT:</span>
-                                <span class="text-cyan-400">5000 / LOCALHOST_SYS</span>
+                                <span class="text-slate-500">BRIDGE INTERFACE:</span>
+                                <span class="text-cyan-400" id="techSpecBridgeUrl">LOCALHOST</span>
                             </div>
                         </div>
                     </div>
@@ -233,73 +248,160 @@
 
     </main>
 
+    <!-- BRIDGE NETWORKING MODAL (CRITICAL FOR PUBLIC ACCESS) -->
+    <div id="bridgeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl hidden">
+        <div class="relative bg-slate-950 w-full max-w-xl rounded-2xl border border-cyan-500/30 shadow-[0_0_80px_rgba(6,182,212,0.2)] overflow-hidden flex flex-col p-6">
+            <h2 class="font-cyber font-black tracking-widest text-cyan-400 text-lg flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-network-wired animate-pulse"></i> SERVER BRIDGE CONFIG
+            </h2>
+            <p class="text-slate-400 text-xs mb-4 leading-relaxed">
+                เนื่องจากพอร์ทัลสตรีมมิ่งรันอยู่บนระบบคลาวด์ Vercel (HTTPS) คุณจำเป็นต้องกรอก URL เชื่อมโยงกับเซิร์ฟเวอร์หลังบ้านในคอมพิวเตอร์ของคุณ เพื่อให้เบราว์เซอร์สามารถดึงรายชื่อและเล่นไฟล์วิดีโอได้
+            </p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-slate-400 text-[10px] uppercase tracking-widest mb-1.5 font-cyber">BACKEND ENDPOINT URL</label>
+                    <input type="text" id="bridgeInputUrl" placeholder="ตัวอย่าง: http://localhost:5000 หรือ https://xxxx.ngrok-free.app" 
+                           class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-2.5 focus:outline-none focus:border-cyan-500 text-cyan-400 text-xs font-mono">
+                </div>
+
+                <div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800 text-[10px] text-slate-400 space-y-2">
+                    <p class="font-bold text-white font-cyber uppercase tracking-wider"><i class="fa-solid fa-circle-question"></i> วิธีการเปิดให้เพื่อนเข้าถึงผ่านอินเทอร์เน็ต</p>
+                    <p>1. รันไฟล์เซิร์ฟเวอร์หลังบ้านในคอมพิวเตอร์ของคุณ: <code class="text-yellow-400">python app.py</code></p>
+                    <p>2. ใช้เครื่องมือสร้างอุโมงค์ความปลอดภัยฟรีอย่าง Ngrok เพื่อให้รันบนอินเทอร์เน็ตปลอดภัย (HTTPS) :</p>
+                    <p class="bg-slate-950 p-2 rounded font-mono text-cyan-300">ngrok http 5000</p>
+                    <p>3. คัดลอกลิงก์ <code class="text-emerald-400">https://xxxx.ngrok-free.app</code> ที่ได้รับมาใส่ช่องด้านบนนี้แล้วกดเซฟ</p>
+                    <p>4. ตอนนี้คุณส่งลิงก์โดเมน Vercel ของคุณให้เพื่อนและส่ง Endpoint นี้ให้เพื่อนกรอก เพื่อแชร์ความบันเทิงร่วมกันได้แล้ว!</p>
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-6">
+                <button onclick="saveBridgeUrl()" class="flex-grow bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black py-2.5 rounded-lg text-xs font-cyber tracking-widest transition-all">
+                    SAVE & ESTABLISH LINK
+                </button>
+                <button onclick="toggleBridgeModal()" class="bg-slate-900 hover:bg-slate-800 text-slate-400 px-4 rounded-lg text-xs border border-slate-800 transition-all">
+                    CLOSE
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="bg-slate-950 border-t border-slate-900 py-10 text-center relative z-10">
         <div class="max-w-7xl mx-auto px-4 space-y-4">
             <div class="flex justify-center space-x-4 font-cyber text-[10px] tracking-widest text-slate-600">
-                <span>PORTAL_VERSION: 3.1.0-ACTIVE</span>
+                <span>PORTAL_VERSION: 3.2.0-PROD</span>
                 <span>•</span>
-                <span>AUTO-SYNCED FILESYSTEM</span>
+                <span>DYNAMIC SECTOR DIRECTORY SCANNER</span>
             </div>
             <p class="text-xs text-slate-500 tracking-wide">© 2026 NullMovie. Quantum Private Media Streaming Portal. All systems active.</p>
         </div>
     </footer>
 
-    <!-- HOLOGRAPHIC TOAST NOTIFICATION -->
+    <!-- TOAST NOTIFICATION -->
     <div id="toast" class="fixed bottom-6 right-6 backdrop-blur-md bg-slate-950/90 border border-cyan-500/30 text-cyan-400 px-6 py-3.5 rounded-xl shadow-[0_0_30px_rgba(6,182,212,0.2)] flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 z-50 font-cyber text-xs tracking-wider">
         <i class="fa-solid fa-bolt-lightning text-cyan-400 animate-pulse"></i>
-        <span id="toastMessage">INITIALIZATION RE-ROUTED</span>
+        <span id="toastMessage">SYSTEM CONNECTED</span>
     </div>
 
     <!-- MAIN APP SCRIPT -->
     <script>
-        // ข้อมูลตัวอย่างสำหรับ Backup ในกรณีหลังบ้านออฟไลน์
+        // ข้อมูลภาพยนตร์จำลองเพื่อป้องกันหน้าระบบว่างเปล่า
         const DEMO_MOVIES = [
             {
                 id: "demo1",
-                title: "ตำนานจอมยุทธ์ภูตถังซาน ภาค 2",
+                title: "ตำนานจอมยุทธ์ภูตถังซาน สำนักถังเลิศภพจบแดน ภาค 2 [พากย์ไทย/ซับไทย]",
                 genre: "Douluo Dalu II",
                 year: 2026,
                 poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=600&auto=format&fit=crop",
                 videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                desc: "ตำนานจอมยุทธ์ภูตถังซาน สำนักถังเลิศภพจบแดน ภาค 2 พากย์ไทย ซับไทย เรื่องราวการเดินทางในยุคใหม่ของโรงเรียนเชร็ค"
+                desc: "ตำนานจอมยุทธ์ภูตถังซาน สำนักถังเลิศภพจบแดน ภาค 2 เรื่องราวการเดินทางในยุคใหม่ของกลุ่มโรงเรียนเชร็คและจิตวิญญาณแห่งสำนักถัง"
             },
             {
                 id: "demo2",
-                title: "พลิกขอบฟ้า ท้าลิขิตสวรรค์",
+                title: "พลิกขอบฟ้า ท้าลิขิตสวรรค์ (Way of Choices / Ze Tian Ji)",
                 genre: "Ze Tian Ji",
                 year: 2025,
                 poster: "https://images.unsplash.com/photo-1542204172-e7052809a862?q=80&w=600&auto=format&fit=crop",
                 videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                desc: "เฉินฉางเซิง ชายหนุ่มผู้มุ่งมั่นเดินทางเปลี่ยนลิขิตสวรรค์เพื่อความอยู่รอดของตนเอง"
+                desc: "เฉินฉางเซิง เด็กหนุ่มอายุสั้นผู้จำต้องผละขุนเขา เดินทางสู่พระนครเพื่อพลิกเปลี่ยนดวงชะตาฟ้าลิขิตลิขิต"
             },
             {
                 id: "demo3",
-                title: "ตำนานเทพกู้จักรวาล",
+                title: "ตำนานเทพกู้จักรวาล (Tales of Herding Gods / Mushen Ji)",
                 genre: "Mushen Ji",
                 year: 2026,
                 poster: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=600&auto=format&fit=crop",
                 videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                desc: "เรื่องราวของเด็กหนุ่มที่ถูกเลี้ยงดูโดยคนพิการในหมู่บ้านผู้พิทักษ์ก่อนจะกลายเป็นผู้พิทักษ์ทั่วยุทธภพ"
+                desc: "เด็กหนุ่มผู้ฟันฝ่าการหล่อหลอมจากยอดคนพิการทั้งเก้า สู่การพลิกฟื้นอารยธรรมเทพและต่อสู้กู่จักรวาล"
             }
         ];
 
-        const API_BASE_URL = "http://localhost:5000/api";
+        // ตรวจสอบหรือดึงที่อยู่ Server หลังบ้านที่บันทึกไว้ในเบราว์เซอร์
+        let apiBaseUrl = localStorage.getItem('nullmovie_api_url') || "http://localhost:5000";
         let isBackendOnline = false;
         let movies = [];
         let currentFilter = 'All';
 
-        // เริ่มต้นการทำงานของเว็บพอร์ทัล
         window.onload = async function() {
+            // ตั้งค่าข้อมูลเริ่มต้นในช่อง input ของ Server Config
+            document.getElementById('bridgeInputUrl').value = apiBaseUrl;
+            document.getElementById('techSpecBridgeUrl').textContent = apiBaseUrl;
+
+            // เช็ค Mixed Content ก่อนเชื่อมต่อ
+            checkMixedContentSecurity();
+
+            await establishConnection();
+        };
+
+        // ฟังก์ชันเตือนหากเข้าผ่าน HTTPS แต่จะโหลดหลังบ้านเป็น HTTP ธรรมดา
+        function checkMixedContentSecurity() {
+            const warningBox = document.getElementById('mixedContentWarning');
+            if (window.location.protocol === 'https:' && apiBaseUrl.startsWith('http://')) {
+                warningBox.classList.remove('hidden');
+            } else {
+                warningBox.classList.add('hidden');
+            }
+        }
+
+        // คอนเฟิร์มการเชื่อมโยงระบบเชื่อมโยงข้อมูล
+        async function establishConnection() {
             await checkBackendStatus();
             await fetchMovies();
             
             renderCategoryChips();
             renderMovies();
             setupFeaturedBanner();
-        };
+        }
 
-        // สลับแท็บหน้าจอหลัก
+        // เปิด-ปิด Modal สตรีมเน็ตเวิร์ก
+        function toggleBridgeModal() {
+            const modal = document.getElementById('bridgeModal');
+            modal.classList.toggle('hidden');
+        }
+
+        // อัปเดตและบันทึก URL เซิร์ฟเวอร์หลังบ้าน
+        function saveBridgeUrl() {
+            let inputUrl = document.getElementById('bridgeInputUrl').value.trim();
+            if (inputUrl === '') {
+                inputUrl = "http://localhost:5000";
+            }
+            // ตัดเครื่องหมาย slash ตัวหลังออกหากผู้ใช้ใส่มาเพื่อความถูกต้องของ Endpoint
+            if (inputUrl.endsWith('/')) {
+                inputUrl = inputUrl.slice(0, -1);
+            }
+
+            localStorage.setItem('nullmovie_api_url', inputUrl);
+            apiBaseUrl = inputUrl;
+            document.getElementById('techSpecBridgeUrl').textContent = apiBaseUrl;
+
+            showToast(`ปรับปรุงสตรีมลิงก์แล้ว: ${apiBaseUrl}`);
+            toggleBridgeModal();
+            checkMixedContentSecurity();
+            establishConnection();
+        }
+
+        // สลับหน้าแท็บหลัก
         function changeTab(tabName) {
             const homeTab = document.getElementById('homeTab');
             const playTab = document.getElementById('playTab');
@@ -308,7 +410,6 @@
             if (tabName === 'home') {
                 homeTab.classList.remove('hidden');
                 playTab.classList.add('hidden');
-                // หยุดเล่นไฟล์วิดีโอเมื่อกลับหน้าหลัก
                 player.pause();
             } else if (tabName === 'play') {
                 homeTab.classList.add('hidden');
@@ -316,70 +417,83 @@
             }
         }
 
-        // ตรวจสอบสถานะการเชื่อมต่อเซิร์ฟเวอร์หลังบ้านในคอมพิวเตอร์ของคุณ
+        // ตรวจสอบการรันเซิร์ฟเวอร์ฝั่งคอมฯ ของคุณ
         async function checkBackendStatus() {
             const statusBadge = document.getElementById('connectionStatus');
-            statusBadge.classList.remove('hidden');
+            const labelBadge = document.getElementById('bridgeStatusLabel');
             
             try {
-                const response = await fetch(`${API_BASE_URL}/status`, { method: 'GET' });
+                // เพิ่มการตรวจจับ timeout สั้น ๆ 3 วินาที เพื่อไม่ให้เว็บค้างถ้าระบบออฟไลน์
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                const response = await fetch(`${apiBaseUrl}/api/status`, { 
+                    method: 'GET',
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+
                 if (response.ok) {
                     isBackendOnline = true;
                     statusBadge.innerHTML = `
                         <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-                        <span class="text-cyan-400">🟢 LOCALHOST ACTIVE</span>
+                        <span class="text-cyan-400 font-mono">🟢 BRIDGE ACTIVE</span>
                     `;
-                    showToast("ระบบหลังบ้าน Localhost เชื่อมต่อสำเร็จ");
+                    labelBadge.innerHTML = "ระบบเชื่อมโยงไฟล์ในคอมพิวเตอร์ของคุณสำเร็จแล้ว";
+                    labelBadge.className = "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider";
                 } else {
-                    throw new Error("Local backend offline");
+                    throw new Error("Local server bad response");
                 }
             } catch (err) {
                 isBackendOnline = false;
                 statusBadge.innerHTML = `
                     <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span>
-                    <span class="text-pink-400">🔴 CLOUD DEMO RUNNING</span>
+                    <span class="text-pink-400 font-mono">🔴 OFFLINE BACKUP</span>
                 `;
-                showToast("เรียกรันไฟล์ตัวอย่างจำลองบนเบราว์เซอร์");
+                labelBadge.innerHTML = "กำลังดึงภาพยนตร์ต้นแบบ (โปรดเปิดสตรีมเซิร์ฟเวอร์คอมฯ ของคุณ)";
+                labelBadge.className = "bg-pink-500/10 text-pink-400 border border-pink-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider";
             }
         }
 
-        // ดึงรายการภาพยนตร์ที่ค้นพบจากหลังบ้าน
+        // ดึงรายชื่อภาพยนตร์จริงจากคอมฯ หรือฐานข้อมูลจำลอง
         async function fetchMovies() {
             if (isBackendOnline) {
                 try {
-                    const response = await fetch(`${API_BASE_URL}/movies`);
+                    const response = await fetch(`${apiBaseUrl}/api/movies`);
                     if (response.ok) {
                         movies = await response.json();
                         return;
                     }
                 } catch (err) {
-                    console.error("เกิดข้อผิดพลาดในการดึงข้อมูลภาพยนตร์", err);
+                    console.error("ล้มเหลวในการโหลดรายการภาพยนตร์จากหลังบ้าน", err);
                 }
             }
-
-            // ในกรณีที่ไม่มีการเชื่อมต่อ API หลังบ้าน จะสำรองดึงข้อมูลจำลอง
             movies = [...DEMO_MOVIES];
         }
 
-        // แสดงรายละเอียดบนแบนเนอร์ด้านบน
+        // อัปเดตข้อมูลแบนเนอร์เด่นนำเสนอตัวแรก
         function setupFeaturedBanner() {
             if (movies.length > 0) {
                 const featured = movies[0];
                 document.getElementById('featuredTitle').textContent = featured.title;
-                document.getElementById('featuredDesc').textContent = featured.desc || "ไม่มีข้อมูลเรื่องย่อ";
-                if(featured.poster && featured.poster.startsWith('http')) {
-                    const bg = document.getElementById('bannerBg');
-                    if (bg) bg.style.backgroundImage = `url('${featured.poster}')`;
+                document.getElementById('featuredDesc').textContent = featured.desc || "ระบบตรวจสอบตรวจพบไฟล์หนังชุดสตรีมมิ่งความเร็วสูงของคุณ";
+                
+                const bg = document.getElementById('bannerBg');
+                if (bg) {
+                    if (featured.poster && featured.poster.startsWith('http')) {
+                        bg.style.backgroundImage = `url('${featured.poster}')`;
+                    } else {
+                        bg.style.backgroundImage = `url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200&auto=format&fit=crop')`;
+                    }
                 }
             }
         }
 
-        // วาดส่วนจัดสรรหมวดหมู่โดยอัตโนมัติจาก Directory ย่อยที่สแกนเจอ
+        // จัดทำหมวดหมู่จากความลึกของโฟลเดอร์โดยอัตโนมัติ
         function renderCategoryChips() {
-            // ดึงหมวดหมู่ (Genre) ออกมาเฉพาะที่ไม่ซ้ำกัน
             const genresSet = new Set();
             movies.forEach(m => {
-                if(m.genre) genresSet.add(m.genre);
+                if (m.genre) genresSet.add(m.genre);
             });
             const genres = ['All', ...Array.from(genresSet)];
             const container = document.getElementById('categoryChips');
@@ -393,7 +507,7 @@
                 const chip = document.createElement('button');
                 chip.onclick = () => filterCategory(genre);
                 chip.className = `px-6 py-2 rounded-lg text-xs uppercase font-cyber tracking-widest border transition-all duration-300 ${isSelected ? activeClasses : inactiveClasses}`;
-                chip.innerText = genre === 'All' ? 'ALL_CORE_MOVIES' : genre;
+                chip.innerText = genre === 'All' ? 'ALL_FILES' : genre;
                 
                 container.appendChild(chip);
             });
@@ -417,7 +531,7 @@
             document.getElementById('moviesSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // แสดงภาพยนตร์ลงบนกริดหลัก
+        // วาดและเรนเดอร์ภาพยนตร์ลงหน้าเว็บ
         function renderMovies(filteredArray = null) {
             const grid = document.getElementById('moviesGrid');
             grid.innerHTML = '';
@@ -433,8 +547,8 @@
             if (listToRender.length === 0) {
                 grid.className = "col-span-full flex flex-col items-center justify-center py-16 text-center text-slate-600 font-cyber";
                 grid.innerHTML = `
-                    <i class="fa-solid fa-atom text-5xl mb-4 animate-spin text-slate-700"></i>
-                    <p class="text-xs uppercase tracking-widest">ไม่พบไฟล์ข้อมูลภาพยนตร์ในส่วนนี้</p>
+                    <i class="fa-solid fa-cloud-arrow-down text-5xl mb-4 animate-bounce text-slate-700"></i>
+                    <p class="text-xs uppercase tracking-widest">ไม่พบไฟล์ภาพยนตร์ในหมวดหมู่นี้</p>
                 `;
                 return;
             } else {
@@ -443,7 +557,7 @@
 
             listToRender.forEach((movie, index) => {
                 const globalIdx = movies.findIndex(m => m.id === movie.id);
-                // กำหนดรูปภาพที่สอดคล้องกับภาพยนต์
+                // สุ่มรูปภาพสวยงามหรือใช้โปสเตอร์
                 const posterUrl = movie.poster || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=400';
                 const glowClass = globalIdx % 2 === 0 ? 'glow-cyan' : 'glow-magenta';
 
@@ -457,15 +571,13 @@
                              onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=400'">
                         
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                            <p class="font-cyber text-[8px] text-slate-400 tracking-wider">LOCAL HD STREAM</p>
+                            <p class="font-cyber text-[8px] text-cyan-400 tracking-wider">LOCAL HD STREAM</p>
                         </div>
 
-                        <!-- Badge สำหรับวิดีโอทั่วไป -->
                         <div class="absolute top-2 left-2 flex flex-col gap-1 z-10 font-cyber text-[8px] tracking-wider">
                             <span class="bg-cyan-500 text-black font-extrabold px-2 py-0.5 rounded shadow-lg uppercase">SYSTEM</span>
                         </div>
 
-                        <!-- ปุ่ม Play overlay -->
                         <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                             <div class="w-14 h-14 rounded-full bg-slate-900 border border-cyan-500 flex items-center justify-center text-cyan-400 text-lg shadow-[0_0_20px_rgba(6,182,212,0.5)] transform scale-75 group-hover:scale-100 transition-all duration-300">
                                 <i class="fa-solid fa-play ml-1"></i>
@@ -483,7 +595,7 @@
             });
         }
 
-        // ระบบค้นหาแบบเรียลไทม์
+        // ค้นหาหนัง
         function searchMovies() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
             if (query === '') {
@@ -499,13 +611,13 @@
             renderMovies(results);
         }
 
-        // สั่งเล่นภาพยนตร์บนเครื่องเล่นแบบ Responsive
+        // จัดส่งไฟล์เล่นเข้าสู่ระบบสตรีมมิ่งความเร็วสูง
         function playMovie(index) {
             const movie = movies[index];
             if (!movie) return;
 
             document.getElementById('playTitle').textContent = movie.title;
-            document.getElementById('playDesc').textContent = movie.desc || "ข้อมูลจำแนกโครงสร้างไฟล์และรายละเอียดหนังครบครัน";
+            document.getElementById('playDesc').textContent = movie.desc || `ไฟล์วิดีโอถูกโหลดผ่านโครงข่ายสตรีมส่วนตัวของคุณ โดยส่งผ่านพอร์ตความเร็วสูงและตัวอ่านสตรีมมิ่ง HTTP 206 Direct.`;
             document.getElementById('playGenre').textContent = movie.genre.toUpperCase();
             
             const player = document.getElementById('mainVideoPlayer');
@@ -513,7 +625,7 @@
             player.load();
             
             player.play().catch(err => {
-                console.log("ต้องการการโต้ตอบจากผู้ใช้เพื่อการเล่นอัตโนมัติ");
+                console.log("ต้องการการอนุญาตเล่นวิดีโอจากเบราว์เซอร์");
             });
 
             changeTab('play');
@@ -525,7 +637,7 @@
             }
         }
 
-        // ฟังก์ชันระบบแจ้งเตือนแบบ Cyber Neon
+        // แสดงแจ้งเตือน Cyber Toast
         function showToast(message) {
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toastMessage');
