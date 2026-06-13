@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NullMovie - Private Quantum Streaming Portal</title>
+    <title>NullMovie - Private Premium Streaming Portal</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -91,12 +91,12 @@
                     </span>
                 </div>
 
-                <!-- Status HUD & Search (ปิดอินเตอร์เฟสความลับด้านสตรีมของเซิร์ฟเวอร์เจ้าของเว็บ) -->
+                <!-- Status Badge & Search -->
                 <div class="flex items-center space-x-4">
                     <!-- Status Indicator -->
                     <div id="connectionStatus" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/40 text-[10px] font-cyber tracking-wider">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-500 animate-pulse"></span>
-                        <span>INITIALIZING SECURE STREAM...</span>
+                        <span>CONNECTING PORTAL...</span>
                     </div>
 
                     <!-- Search Bar -->
@@ -113,20 +113,6 @@
     <!-- MAIN CONTAINER -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full relative z-10">
 
-        <!-- BYPASS WARNING INFO BANNER -->
-        <div id="ngrokBypassBanner" class="hidden mb-6 bg-cyan-950/40 border border-cyan-500/30 rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-circle-exclamation text-cyan-400 text-2xl animate-pulse shrink-0"></i>
-                <div class="text-xs text-slate-300">
-                    <p class="font-bold uppercase tracking-wider font-cyber text-cyan-400">วิธีเปิดใช้การรับชมผ่านอุโมงค์ Ngrok</p>
-                    <p>เนื่องจาก Ngrok มีระบบความปลอดภัยส่วนบุคคล ผู้ชมและเพื่อนๆ จำเป็นต้องคลิกลิงก์ปลดล็อคด้านขวาเพื่อกด **"Visit Site"** เพียงหนึ่งครั้ง จากนั้นจะสามารถเล่นหนังได้ทันที!</p>
-                </div>
-            </div>
-            <a href="https://coat-straw-puzzling.ngrok-free.dev" target="_blank" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-cyber font-bold text-[10px] tracking-wider px-4 py-2 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.3)] shrink-0 transition-all">
-                UNLOCK_STREAM.EXE <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
-            </a>
-        </div>
-
         <!-- ================= HOME TAB ================= -->
         <div id="homeTab" class="tab-content transition-opacity duration-300">
             <!-- Hero Banner -->
@@ -135,17 +121,17 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent"></div>
                 
                 <div class="absolute top-6 right-6 font-cyber text-[10px] text-cyan-400/40 hidden md:block text-right pointer-events-none leading-relaxed">
-                    <p>PORTAL SECURITY: PRIVATE TUNNEL MODE</p>
-                    <p>GRID INTERFACE: PROD-STABLE</p>
-                    <p>DECODER: ACCELERATED QUANTUM ENGINE</p>
+                    <p>PORTAL STATUS: ONLINE</p>
+                    <p>GRID RESOLUTION: 4K ULTRA</p>
+                    <p>DECODER: ACCELERATED MOVIE ENGINE</p>
                 </div>
 
                 <div class="relative z-10 max-w-2xl">
                     <div class="flex items-center gap-2 mb-4">
-                        <span class="bg-gradient-to-r from-red-500 to-pink-500 text-white border border-red-500/30 text-[10px] font-cyber font-bold px-3 py-1 rounded tracking-widest uppercase">TUNNEL ACTIVE</span>
-                        <span id="bridgeStatusLabel" class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider">SECURE ENDPOINT CONNECTED</span>
+                        <span class="bg-gradient-to-r from-red-500 to-pink-500 text-white border border-red-500/30 text-[10px] font-cyber font-bold px-3 py-1 rounded tracking-widest uppercase">STREAM SYSTEM</span>
+                        <span id="bridgeStatusLabel" class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider">CONNECTING TO STORAGE ENGINE...</span>
                     </div>
-                    <h1 class="text-4xl md:text-5xl font-black mt-3 text-white tracking-tight leading-none font-cyber uppercase" id="featuredTitle">กำลังดึงโครงข่ายสตรีมมิ่ง...</h1>
+                    <h1 class="text-4xl md:text-5xl font-black mt-3 text-white tracking-tight leading-none font-cyber uppercase" id="featuredTitle">กำลังดึงฐานคลังข้อมูล...</h1>
                     <p class="text-slate-400 mt-4 text-sm md:text-base line-clamp-3 leading-relaxed" id="featuredDesc">ยินดีต้อนรับเข้าสู่ระบบพอร์ทัลสตรีมมิ่งความเร็วสูงที่รันข้อมูลภาพยนตร์และไฟล์อนิเมะส่งตรงจากคอมพิวเตอร์ของคุณแบบออนไลน์เสถียร 24 ชม.</p>
                     
                     <div class="mt-8 flex flex-wrap gap-4">
@@ -172,7 +158,7 @@
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-slate-800 pb-5">
                     <div>
                         <h2 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 font-cyber tracking-wide" id="movieListTitle">CORE_GRID.EXE</h2>
-                        <p class="text-xs text-slate-500 font-cyber tracking-wider uppercase mt-1">รายการไฟล์อนิเมะและภาพยนตร์ที่เปิดให้รับชมขณะนี้</p>
+                        <p class="text-xs text-slate-500 font-cyber tracking-wider uppercase mt-1">รายการไฟล์ภาพยนตร์และอนิเมะทั้งหมดที่พร้อมให้บริการ</p>
                     </div>
                     <div class="flex items-center gap-3 font-cyber text-xs">
                         <span class="bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 px-3 py-1.5 rounded-md" id="movieCount">ITEMS: 00</span>
@@ -203,6 +189,19 @@
                     </video>
                 </div>
                 
+                <!-- AUTO FORMAT DETECTOR NOTICE BANNER (เพิ่มระบบสแกนตรวจสอบนามสกุลวิดีโอ) -->
+                <div id="codecWarningBox" class="hidden mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
+                    <div class="flex items-start gap-3">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-400 text-lg animate-pulse mt-0.5"></i>
+                        <div class="text-xs text-amber-200">
+                            <p class="font-bold uppercase tracking-widest font-cyber text-amber-400 mb-1">💡 ระบบสแกนไฟล์ภาพยนตร์อัตโนมัติ : คลังวิดีโอของคุณมีไฟล์ตระกูล .ts</p>
+                            <p class="leading-relaxed mb-2">เบราว์เซอร์ส่วนใหญ่จะไม่สามารถแสดงผลภาพของไฟล์ประเภท <code class="bg-black/40 px-1 py-0.5 rounded text-white font-mono">.ts</code> หรือ <code class="bg-black/40 px-1 py-0.5 rounded text-white font-mono">.mkv</code> ได้ในตัว แนะนำให้คุณแปลงเป็นไฟล์ตระกูล <code class="bg-emerald-400 text-slate-950 font-bold px-1 rounded font-mono">.mp4 (H.264 / AAC)</code> เพื่อเปิดใช้การรับชมและสไลด์เวลาดูได้เสถียรที่สุด!</p>
+                            <p class="font-bold font-cyber text-[10px] text-slate-400 uppercase">💻 วิธีการแปลงไฟล์อย่างรวดเร็ว (Command Line ด้วย FFmpeg) :</p>
+                            <pre class="bg-black/60 text-cyan-300 p-2.5 rounded-lg mt-1 font-mono text-[9px] overflow-x-auto select-all">ffmpeg -i "Douluo Dalu II ตำนานจอมยุทธ์ภูตถังซาน ภาค 2 พากย์ไทย.ts" -c copy "Douluo Dalu II ตำนานจอมยุทธ์ภูตถังซาน ภาค 2 พากย์ไทย.mp4"</pre>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Interface HUD Controls & Info -->
                 <div class="p-6 md:p-8">
                     <div class="flex flex-col lg:flex-row justify-between items-start gap-6 border-b border-slate-800/80 pb-6">
@@ -229,15 +228,15 @@
                             </h4>
                             <div class="flex justify-between">
                                 <span class="text-slate-500">DECODER ENGINE:</span>
-                                <span class="text-emerald-400">HTTP 206 COAT-TUNNEL</span>
+                                <span class="text-emerald-400">HTTP 206 FLOW TUNNEL</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-500">FORMAT VALIDATED:</span>
                                 <span class="text-pink-400">MP4, TS, MKV, AVI Active</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-500">TUNNEL HOST:</span>
-                                <span class="text-cyan-400">COAT-STRAW-PUZZLING</span>
+                                <span class="text-slate-500">SYSTEM CHANNEL:</span>
+                                <span class="text-cyan-400">HIGH-SPEED LINEAR LINK</span>
                             </div>
                         </div>
                     </div>
@@ -251,11 +250,11 @@
     <footer class="bg-slate-950 border-t border-slate-900 py-10 text-center relative z-10">
         <div class="max-w-7xl mx-auto px-4 space-y-4">
             <div class="flex justify-center space-x-4 font-cyber text-[10px] tracking-widest text-slate-600">
-                <span>PORTAL_VERSION: 3.5.0-SECURE</span>
+                <span>PORTAL_VERSION: 3.8.0-STABLE</span>
                 <span>•</span>
-                <span>HARDCODED CLOUD GATEWAY ACTIVE</span>
+                <span>SECURE PRIVATE CLOUD GRID ACTIVE</span>
             </div>
-            <p class="text-xs text-slate-500 tracking-wide">© 2026 NullMovie. Quantum Private Media Streaming Portal. All systems active.</p>
+            <p class="text-xs text-slate-500 tracking-wide">© 2026 NullMovie. Private Media Streaming Portal. All systems active.</p>
         </div>
     </footer>
 
@@ -267,7 +266,7 @@
 
     <!-- MAIN APP SCRIPT -->
     <script>
-        // ข้อมูลภาพยนตร์จำลองเพื่อป้องกันหน้าระบบว่างเปล่ากรณีหลังบ้านออฟไลน์
+        // ข้อมูลภาพยนตร์จำลองเพื่อป้องกันหน้าระบบว่างเปล่าในกรณีที่หลังบ้านคอมฯ ออฟไลน์อยู่
         const DEMO_MOVIES = [
             {
                 id: "demo1",
@@ -298,7 +297,7 @@
             }
         ];
 
-        // กำหนดที่อยู่ Ngrok แบบถาวรตามที่คุณแจ้งไว้ (ไม่มีใครดูผ่านเว็บอินเตอร์เฟสหรือตั้งค่าปุ่มแก้ไขได้อีกต่อไป)
+        // กำหนดที่อยู่การเชื่อมต่อกับเครื่องคอมพิวเตอร์ของคุณแบบลับเบื้องหลัง (ซ่อน Ngrok ออกไปทั้งหมดตามต้องการ)
         const apiBaseUrl = "https://coat-straw-puzzling.ngrok-free.dev";
         let isBackendOnline = false;
         let movies = [];
@@ -308,7 +307,7 @@
             await establishConnection();
         };
 
-        // เริ่มเชื่อมต่อและประมวลผลข้อมูล
+        // เริ่มเชื่อมต่อและดึงคลังวิดีโอแบบเงียบสงบ
         async function establishConnection() {
             await checkBackendStatus();
             await fetchMovies();
@@ -338,17 +337,16 @@
         async function checkBackendStatus() {
             const statusBadge = document.getElementById('connectionStatus');
             const labelBadge = document.getElementById('bridgeStatusLabel');
-            const bypassBanner = document.getElementById('ngrokBypassBanner');
             
             try {
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-                // ส่งคำขอข้ามหน้าเตือนความปลอดภัยของ Ngrok ด้วย Header พิเศษ
+                // ส่งคำขอข้ามหน้าเตือนความปลอดภัยของ Ngrok ด้วย Header พิเศษเพื่อโหลด API อย่างปลอดภัย
                 const response = await fetch(`${apiBaseUrl}/api/status`, { 
                     method: 'GET',
                     headers: {
-                        'ngrok-skip-browser-warning': '69420'
+                        'ngrok-skip-browser-warning': 'true'
                     },
                     signal: controller.signal
                 });
@@ -358,11 +356,10 @@
                     isBackendOnline = true;
                     statusBadge.innerHTML = `
                         <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-                        <span class="text-cyan-400 font-mono">🟢 SERVER ONLINE</span>
+                        <span class="text-cyan-400 font-mono">🟢 PORTAL ACTIVE</span>
                     `;
-                    labelBadge.innerHTML = "สตรีมตรงจากไดรฟ์ G:\\Program\\Movie ในคอมพิวเตอร์ของคุณสำเร็จ";
+                    labelBadge.innerHTML = "สตรีมภาพยนตร์ตรงจากคลังส่วนตัวในคอมพิวเตอร์ของคุณสำเร็จแล้ว";
                     labelBadge.className = "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider";
-                    bypassBanner.classList.add('hidden');
                 } else {
                     throw new Error("Server response error");
                 }
@@ -370,13 +367,10 @@
                 isBackendOnline = false;
                 statusBadge.innerHTML = `
                     <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span>
-                    <span class="text-pink-400 font-mono">🔴 OFFLINE DEMO</span>
+                    <span class="text-pink-400 font-mono">🔴 OFFLINE REPOS</span>
                 `;
-                labelBadge.innerHTML = "กำลังใช้งานคลังข้อมูลจำลอง (โปรดรันเซิร์ฟเวอร์คอมพิวเตอร์ของคุณ)";
+                labelBadge.innerHTML = "กำลังดึงข้อมูลต้นแบบ (โปรดตรวจสอบสถานะเชื่อมต่อเซิร์ฟเวอร์คอมพิวเตอร์หลักของคุณ)";
                 labelBadge.className = "bg-pink-500/10 text-pink-400 border border-pink-500/20 text-[10px] font-cyber px-2.5 py-1 rounded tracking-wider";
-                
-                // แสดงแบนเนอร์ช่วยคลิกปลดล็อคเมื่อไม่พบเซิร์ฟเวอร์ออฟไลน์
-                bypassBanner.classList.remove('hidden');
             }
         }
 
@@ -386,7 +380,7 @@
                 try {
                     const response = await fetch(`${apiBaseUrl}/api/movies`, {
                         headers: {
-                            'ngrok-skip-browser-warning': '69420'
+                            'ngrok-skip-browser-warning': 'true'
                         }
                     });
                     if (response.ok) {
@@ -394,7 +388,7 @@
                         return;
                     }
                 } catch (err) {
-                    console.error("เกิดข้อผิดพลาดในการดึงภาพยนตร์จากหลังบ้าน", err);
+                    console.error("เกิดข้อผิดพลาดในการดึงข้อมูล", err);
                 }
             }
             movies = [...DEMO_MOVIES];
@@ -405,7 +399,7 @@
             if (movies.length > 0) {
                 const featured = movies[0];
                 document.getElementById('featuredTitle').textContent = featured.title;
-                document.getElementById('featuredDesc').textContent = featured.desc || "ระบบตรวจสอบตรวจพบไฟล์หนังชุดสตรีมมิ่งความเร็วสูงของคุณ";
+                document.getElementById('featuredDesc').textContent = featured.desc || "ระบบสแกนตรวจสอบความจุและรายละเอียดไฟล์เรียบร้อย พร้อมสตรีมมิ่ง";
                 
                 const bg = document.getElementById('bannerBg');
                 if (bg) {
@@ -477,7 +471,7 @@
                 grid.className = "col-span-full flex flex-col items-center justify-center py-16 text-center text-slate-600 font-cyber";
                 grid.innerHTML = `
                     <i class="fa-solid fa-satellite-dish text-5xl mb-4 animate-bounce text-slate-700"></i>
-                    <p class="text-xs uppercase tracking-widest">ยังไม่พบไฟล์เชื่อมต่อในเซ็กเตอร์นี้</p>
+                    <p class="text-xs uppercase tracking-widest">ยังไม่พบไฟล์สแกนในโฟลเดอร์ย่อยนี้</p>
                 `;
                 return;
             } else {
@@ -499,7 +493,7 @@
                              onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=400'">
                         
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                            <p class="font-cyber text-[8px] text-cyan-400 tracking-wider">LOCAL CLOUD STREAM</p>
+                            <p class="font-cyber text-[8px] text-cyan-400 tracking-wider">SECURE DIRECT FLOW</p>
                         </div>
 
                         <div class="absolute top-2 left-2 flex flex-col gap-1 z-10 font-cyber text-[8px] tracking-wider">
@@ -523,7 +517,7 @@
             });
         }
 
-        // ค้นหาหนัง
+        // ค้นหาภาพยนตร์
         function searchMovies() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
             if (query === '') {
@@ -539,21 +533,30 @@
             renderMovies(results);
         }
 
-        // จัดส่งลิ้งก์วิดีโอเข้าเครื่องเล่นวิดีโอ
+        // ส่งวิดีโอเข้าเครื่องเล่นหลัก
         function playMovie(index) {
             const movie = movies[index];
             if (!movie) return;
 
             document.getElementById('playTitle').textContent = movie.title;
-            document.getElementById('playDesc').textContent = movie.desc || `ไฟล์วิดีโอเปิดเล่นด้วยระบบอุโมงค์ความปลอดภัยยิงตรงมายังหน่วยเก็บข้อมูลในคอมพิวเตอร์ของคุณแบบออนไลน์เสถียร`;
+            document.getElementById('playDesc').textContent = movie.desc || `ไฟล์วิดีโอนี้เปิดเล่นด้วยระบบอุโมงค์ความปลอดภัยยิงตรงมายังหน่วยเก็บข้อมูลในคอมพิวเตอร์ของคุณแบบออนไลน์เสถียร`;
             document.getElementById('playGenre').textContent = movie.genre.toUpperCase();
             
+            // เช็คว่าไฟล์ที่กดเล่นเป็นสกุล .ts หรือ .mkv เพื่อแสดงป้ายเตือนและวิธีแก้ไข
+            const videoUrlLower = movie.videoUrl.toLowerCase();
+            const codecWarningBox = document.getElementById('codecWarningBox');
+            if (videoUrlLower.includes('.ts') || videoUrlLower.includes('.mkv') || videoUrlLower.includes('.avi')) {
+                codecWarningBox.classList.remove('hidden');
+            } else {
+                codecWarningBox.classList.add('hidden');
+            }
+
             const player = document.getElementById('mainVideoPlayer');
             player.src = movie.videoUrl;
             player.load();
             
             player.play().catch(err => {
-                console.log("ต้องการสิทธิ์คลิกเล่นจากผู้ใช้เว็บ");
+                console.log("ต้องการสิทธิ์คลิกเล่นจากเบราว์เซอร์");
             });
 
             changeTab('play');
@@ -565,7 +568,7 @@
             }
         }
 
-        // บันทึกรายงานสถานะลง Toast แจ้งเตือนแบบกระชับ
+        // แสดงแจ้งเตือน Cyber Toast
         function showToast(message) {
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toastMessage');
