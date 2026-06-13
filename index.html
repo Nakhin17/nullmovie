@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Optimization -->
-    <title>MovieHub - ดูหนังออนไลน์ฟรี ซีรีส์ฟรี อัปเดตใหม่ทุกวัน</title>
-    <meta name="description" content="ศูนย์รวมความบันเทิง ดูหนังออนไลน์ฟรี ซีรีส์ฝรั่ง ซีรีส์เกาหลี อนิเมะ พากย์ไทย ซับไทย ภาพคมชัด HD ไม่มีโฆษณากวนใจ อัปเดตใหม่ล่าสุด 2026">
-    <meta name="keywords" content="ดูหนังออนไลน์, ดูหนังฟรี, หนังใหม่ 2026, ซีรีส์ฟรี, ดูซีรีส์ออนไลน์, ดูหนัง HD, moviehub">
+    <title>MovieHub - ดูหนังออนไลน์ฟรี ซีรีส์ฟรี อนิเมะฮิต อัปเดตใหม่ทุกวัน</title>
+    <meta name="description" content="ศูนย์รวมความบันเทิง ดูหนังออนไลน์ฟรี ซีรีส์ฝรั่ง ซีรีส์เกาหลี อนิเมะพากย์ไทย ซับไทย ดึงข้อมูลจากฐานข้อมูลใหญ่ ภาพคมชัด HD ไม่มีโฆษณากวนใจ อัปเดตใหม่ล่าสุด 2026">
+    <meta name="keywords" content="ดูหนังออนไลน์, ดูหนังฟรี, หนังใหม่ 2026, ซีรีส์ฟรี, ดูอนิเมะ, อนิเมะออนไลน์, ดูซีรีส์ออนไลน์, ดูหนัง HD, moviehub">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph (Facebook / LINE / Discord) -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="MovieHub - ดูหนังออนไลน์ฟรี ซีรีส์ฟรี อัปเดตใหม่ทุกวัน">
-    <meta property="og:description" content="ดูหนังออนไลน์ฟรี ซีรีส์ฝรั่ง เกาหลี อนิเมะ ภาพคมชัด HD ไม่มีโฆษณาคั่น">
+    <meta property="og:title" content="MovieHub - ดูหนังออนไลน์ฟรี ซีรีส์ฟรี อนิเมะฮิต">
+    <meta property="og:description" content="ดูหนังออนไลน์ฟรี ซีรีส์ฝรั่ง เกาหลี ออนิเมะญี่ปุ่น ภาพคมชัด HD ไม่มีโฆษณาคั่น">
     <meta property="og:image" content="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80">
     <meta property="og:url" content="https://moviehub.vercel.app">
 
@@ -67,7 +67,7 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- Header Navbar -->
-    <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-md border-b border-gray-800">
+    <header class="sticky top-0 z-50 bg-[#0b0f19]/95 backdrop-blur-md border-b border-gray-800">
         <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
             <!-- Brand Logo -->
             <a href="#" onclick="goHome(event)" class="flex items-center gap-2 text-red-500 font-bold text-2xl tracking-wider">
@@ -77,7 +77,7 @@
 
             <!-- Search Bar Form -->
             <form onsubmit="handleSearch(event)" class="relative flex-1 max-w-md w-full">
-                <input type="text" id="searchInput" placeholder="ค้นหาหนัง ซีรีส์ หรืออนิเมะ..." 
+                <input type="text" id="searchInput" placeholder="ค้นหาหนัง ซีรีส์ หรืออนิเมะที่นี่..." 
                     class="w-full bg-gray-900/80 text-gray-200 pl-11 pr-4 py-2 rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
                 <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                     <i data-lucide="search" class="w-5 h-5"></i>
@@ -85,17 +85,34 @@
             </form>
 
             <!-- Navigation Menu -->
-            <nav class="flex items-center gap-6 text-sm font-medium">
-                <button onclick="setCategory('all')" class="nav-link text-red-500 transition-colors">หน้าแรก</button>
-                <button onclick="setCategory('movie')" class="nav-link hover:text-red-500 text-gray-300 transition-colors">ภาพยนตร์</button>
-                <button onclick="setCategory('tv')" class="nav-link hover:text-red-500 text-gray-300 transition-colors">ซีรีส์/ทีวีโชว์</button>
+            <nav class="flex items-center gap-2 sm:gap-4 text-sm font-medium">
+                <button onclick="setCategory('all')" id="nav-all" class="nav-link px-3 py-1.5 rounded-full text-red-500 bg-red-500/10 transition-all">หน้าแรก</button>
+                <button onclick="setCategory('movie')" id="nav-movie" class="nav-link px-3 py-1.5 rounded-full text-gray-300 hover:text-white hover:bg-gray-800 transition-all">ภาพยนตร์</button>
+                <button onclick="setCategory('tv')" id="nav-tv" class="nav-link px-3 py-1.5 rounded-full text-gray-300 hover:text-white hover:bg-gray-800 transition-all">ซีรีส์</button>
+                <button onclick="setAnimeCategory()" id="nav-anime" class="nav-link px-3 py-1.5 rounded-full text-gray-300 hover:text-white hover:bg-gray-800 flex items-center gap-1.5 transition-all">
+                    <span class="w-2 h-2 bg-yellow-400 rounded-full animate-ping"></span>
+                    <span>อนิเมะ (Anime)</span>
+                </button>
             </nav>
         </div>
     </header>
 
+    <!-- Genre / Categories Quick Filter Bar -->
+    <section class="bg-gray-950/60 border-b border-gray-800/50 py-3">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center gap-3 overflow-x-auto pb-1 no-scrollbar text-xs md:text-sm" id="genresContainer">
+                <span class="text-gray-500 whitespace-nowrap flex items-center gap-1"><i data-lucide="sliders-horizontal" class="w-4 h-4"></i> แนวภาพยนตร์:</span>
+                <!-- Genres will dynamically render here -->
+                <button class="bg-gray-900 text-gray-400 px-3 py-1 rounded-full animate-pulse w-16 h-6"></button>
+                <button class="bg-gray-900 text-gray-400 px-3 py-1 rounded-full animate-pulse w-16 h-6"></button>
+                <button class="bg-gray-900 text-gray-400 px-3 py-1 rounded-full animate-pulse w-16 h-6"></button>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content Dynamic Wrapper -->
     <main class="flex-1">
-        <!-- Hero Section (Featured Movies) - Will hidden when search -->
+        <!-- Hero Section (Featured Movies) - Will hidden when search or filter -->
         <section id="heroSection" class="relative min-h-[400px] md:min-h-[550px] flex items-center justify-start overflow-hidden mb-8">
             <div class="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-[#0b0f19]/70 to-transparent z-10"></div>
             <div id="heroBg" class="absolute inset-0 bg-cover bg-center transition-all duration-700 scale-105" style="background-image: url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1600&q=80');"></div>
@@ -106,7 +123,7 @@
                 </div>
                 <h1 id="heroTitle" class="text-3xl md:text-5xl font-bold mb-3 text-white drop-shadow">กำลังโหลดข้อมูลหนังแนะนำ...</h1>
                 <p id="heroOverview" class="text-gray-300 text-sm md:text-base mb-6 line-clamp-3 md:line-clamp-4 leading-relaxed">
-                    พบกับศูนย์รวมภาพยนตร์และซีรีส์ฟรีแบบจัดเต็ม ไม่ว่าจะเป็นหนังชนโรง หนังเก่าสุดคลาสสิก หรือซีรีส์สุดฮิตในสตรีมมิ่ง ค้นหาและรับชมได้ทันทีโดยไม่ต้องลงทะเบียน
+                    พบกับศูนย์รวมภาพยนตร์ ซีรีส์ และอนิเมะแปลไทยฟรียอดนิยม ค้นหาและรับชมได้ทันทีโดยไม่ต้องสมัครสมาชิก
                 </p>
                 <div class="flex flex-wrap gap-3">
                     <button id="heroPlayBtn" class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-lg hover:shadow-red-600/30">
@@ -189,7 +206,7 @@
                 <span>MOVIEHUB</span>
             </div>
             <p class="max-w-xl mx-auto mb-4 leading-relaxed text-gray-400">
-                เว็บไซต์นี้พัฒนาขึ้นเพื่อความบันเทิงและการทดสอบฝีมือในการเขียนโปรแกรม โดยดึง API แหล่งข้อมูลแบบสาธารณะมาจำลองการเล่นเนื้อหา
+                เว็บไซต์นี้พัฒนาขึ้นเพื่อความบันเทิงและการทดสอบฝีมือในการเขียนโปรแกรม โดยดึงข้อมูลจำลองภาพยนตร์ อนิเมะ และซีรีส์จาก API สาธารณะเพื่อจำลองความบันเทิง
             </p>
             <p>&copy; 2026 MovieHub. All Rights Reserved. Powered by TMDB & GitHub & Vercel.</p>
         </div>
@@ -197,51 +214,170 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // ใช้ TMDB API Key แบบ Read-Only ที่จัดเตรียมไว้ให้เพื่อความสะดวกในการสาธิต
-        // แนะนำให้สมัครที่ themoviedb.org และเปลี่ยนเป็นของตัวเองในภายหลังเพื่อความสถียร
+        // TMDB API Key Read-Only
         const TMDB_API_KEY = "834c449339a9c8eb4ca98a08a287233f"; 
         const TMDB_BASE_URL = "https://api.themoviedb.org/3";
         const IMG_PATH = "https://image.tmdb.org/t/p/w500";
         const BACKDROP_PATH = "https://image.tmdb.org/t/p/original";
 
+        // ID สำหรับแนวเรื่องอนิเมะ (Animation ใน TMDB คือ 16)
+        const ANIME_GENRE_ID = 16; 
+
         // Application State
-        let currentMediaType = 'all'; // all, movie, tv
+        let currentMediaType = 'all'; // all, movie, tv, anime
         let currentQuery = '';
         let selectedMovie = null;
         let selectedSource = 'vidsrc'; // vidsrc, vidlink, vidsrc_xyz
         let currentSeason = 1;
         let currentEpisode = 1;
+        let activeGenreId = null;
+
+        // รายชื่อหมวดหมู่ที่ใช้บ่อย
+        const popularGenres = [
+            { id: 28, name: "แอคชั่น" },
+            { id: 12, name: "ผจญภัย" },
+            { id: 16, name: "อนิเมะ/การ์ตูน" },
+            { id: 35, name: "ตลก" },
+            { id: 18, name: "ดราม่า" },
+            { id: 27, name: "สยองขวัญ" },
+            { id: 878, name: "ไซไฟ/อวกาศ" },
+            { id: 10749, name: "โรแมนติก" },
+            { id: 9648, name: "ลึกลับซ่อนเงื่อน" },
+            { id: 10759, name: "แอคชั่น&ผจญภัย (ซีรีส์)" },
+            { id: 10765, name: "ไซไฟ&แฟนตาซี (ซีรีส์)" }
+        ];
+
+        // รายการหนังและอนิเมะสำรอง (Backup/Fallback) หาก TMDB API ขัดข้องหรือไม่สามารถโหลดได้
+        const fallbackItems = [
+            { id: 502356, media_type: "movie", title: "The Super Mario Bros. Movie", poster_path: "/qNBAX6XgZ6v7U76v60bA9W8N975.jpg", backdrop_path: "/i8A9vG6v60bA9W8N975.jpg", vote_average: 7.8, release_date: "2023-04-05", genre_ids: [16, 12, 10751, 35, 14], overview: "เรื่องราวของช่างซ่อมท่อประปาสองพี่น้อง มาริโอ และ ลุยจิ ที่ถูกพัดพาสู่ดินแดนมหัศจรรย์อาณาจักรเห็ด" },
+            { id: 85937, media_type: "tv", name: "Demon Slayer: Kimetsu no Yaiba", poster_path: "/x8g7nS2Xg67N6W08fA9W8N975.jpg", backdrop_path: "/nTvM6v60bA9W8N975.jpg", vote_average: 8.7, first_air_date: "2019-04-06", genre_ids: [16, 10759, 10765], overview: "เด็กหนุ่มผู้ใจดีออกเดินทางปราบอสูรเพื่อหาทางรักษาให้บ้านเมืองและช่วยน้องสาวที่กลายเป็นอสูรให้กลับเป็นมนุษย์อีกครั้ง" },
+            { id: 299534, media_type: "movie", title: "Avengers: Endgame", poster_path: "/or066gU9bB0gJ6v60bA9W8N975.jpg", backdrop_path: "/7Ry6v60bA9W8N975.jpg", vote_average: 8.3, release_date: "2019-04-24", genre_ids: [12, 878, 28], overview: "บทสรุปมหาสงครามล้างจักรวาล การต่อสู้ครั้งสุดท้ายของเหล่าอเวนเจอร์สเพื่อกอบกู้ทุกสรรพสิ่ง" },
+            { id: 19404, media_type: "movie", title: "Dilwale Dulhania Le Jayenge", poster_path: "/vC6v60bA9W8N975.jpg", backdrop_path: "/3Ry6v60bA9W8N975.jpg", vote_average: 8.5, release_date: "1995-10-20", genre_ids: [35, 18, 10749], overview: "ภาพยนตร์ความรักสุดโรแมนติกที่ตราตรึงใจของชาวอินเดียและผู้คนทั่วโลก" },
+            { id: 94605, media_type: "tv", name: "Arcane", poster_path: "/fqWZ066gU9bB0gJ6v60bA9W8N975.jpg", backdrop_path: "/2Ry6v60bA9W8N975.jpg", vote_average: 8.7, first_air_date: "2021-11-06", genre_ids: [16, 10759, 10765, 18], overview: "ท่ามกลางความขัดแย้งระหว่างสองเมืองคู่ขนาน พี่น้องสองคนได้สู้รบกันคนละฝ่ายในสงครามแห่งเทคโนโลยีและเวทมนตร์" },
+            { id: 157336, media_type: "movie", title: "Interstellar", poster_path: "/gEU2Wv60bA9W8N975.jpg", backdrop_path: "/rRy6v60bA9W8N975.jpg", vote_average: 8.4, release_date: "2014-11-05", genre_ids: [12, 18, 878], overview: "การผจญภัยของทีมนักบินอวกาศผู้เดินทางผ่านรูหนอนเพื่อเสาะหาดาวดวงใหม่เพื่อความอยู่รอดของเผ่าพันธุ์มนุษย์" }
+        ];
 
         // Initialize application
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
+            renderGenresBar();
             fetchTrendingAndHero();
         });
+
+        // Dynamic Genres Bar Rendering
+        function renderGenresBar() {
+            const container = document.getElementById('genresContainer');
+            container.innerHTML = `<span class="text-gray-500 whitespace-nowrap flex items-center gap-1"><i data-lucide="sliders-horizontal" class="w-4 h-4"></i> ค้นหาตามประเภท:</span>`;
+            
+            // ปุ่ม "ทั้งหมด"
+            const allBtn = document.createElement('button');
+            allBtn.className = "genre-btn bg-red-600 text-white px-3 py-1 rounded-full whitespace-nowrap hover:bg-red-700 transition-all text-xs font-medium";
+            allBtn.innerText = "ทั้งหมด";
+            allBtn.onclick = () => filterByGenre(null, allBtn);
+            container.appendChild(allBtn);
+
+            // วนลูปสร้างปุ่มหมวดหมู่
+            popularGenres.forEach(genre => {
+                const btn = document.createElement('button');
+                btn.className = "genre-btn bg-gray-900 text-gray-300 px-3 py-1 rounded-full whitespace-nowrap hover:bg-gray-800 hover:text-white transition-all text-xs font-medium";
+                btn.innerText = genre.name;
+                btn.onclick = () => filterByGenre(genre.id, btn);
+                container.appendChild(btn);
+            });
+            lucide.createIcons();
+        }
+
+        // Filter Grid contents based on clicked Genre
+        async function filterByGenre(genreId, element) {
+            activeGenreId = genreId;
+            
+            // จัดการ Style Active ให้กับปุ่มหมวดหมู่
+            document.querySelectorAll('.genre-btn').forEach(btn => {
+                btn.className = "genre-btn bg-gray-900 text-gray-300 px-3 py-1 rounded-full whitespace-nowrap hover:bg-gray-800 hover:text-white transition-all text-xs font-medium";
+            });
+            if (element) {
+                element.className = "genre-btn bg-red-600 text-white px-3 py-1 rounded-full whitespace-nowrap hover:bg-red-700 transition-all text-xs font-medium";
+            }
+
+            if (!genreId) {
+                if (currentMediaType === 'anime') {
+                    setAnimeCategory();
+                } else {
+                    setCategory(currentMediaType);
+                }
+                return;
+            }
+
+            // ซ่อน Hero Banner เพื่อแสดงผลการกรองได้กว้างขวางขึ้น
+            document.getElementById('heroSection').classList.add('hidden');
+
+            const genreObj = popularGenres.find(g => g.id === genreId);
+            const genreName = genreObj ? genreObj.name : "ภาพยนตร์";
+
+            document.getElementById('sectionTitle').innerHTML = `
+                <i data-lucide="filter" class="w-6 h-6 text-red-500"></i> หมวดหมู่: <span class="text-red-500 ml-1">"${genreName}"</span>
+            `;
+            lucide.createIcons();
+
+            let mediaTypeToFetch = (currentMediaType === 'all' || currentMediaType === 'movie') ? 'movie' : 'tv';
+            if (genreId === 10759 || genreId === 10765) {
+                mediaTypeToFetch = 'tv';
+            }
+
+            let url = `${TMDB_BASE_URL}/discover/${mediaTypeToFetch}?api_key=${TMDB_API_KEY}&with_genres=${genreId}&language=th-TH&sort_by=popularity.desc&page=1`;
+
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                // ตรวจสอบความถูกต้องของข้อมูล (Safety Check)
+                if (data && data.results && Array.isArray(data.results)) {
+                    const formatted = data.results.map(item => ({ ...item, media_type: mediaTypeToFetch }));
+                    renderGrid(formatted, `ภาพยนตร์และซีรีส์ในหมวดหมู่ "${genreName}"`);
+                } else {
+                    // หากไม่มีผลลัพธ์หรือเกิดข้อผิดพลาด ลองดึงข้อมูลสำรองที่มีแนวตรงกัน
+                    const filteredFallbacks = fallbackItems.filter(item => item.genre_ids && item.genre_ids.includes(genreId));
+                    renderGrid(filteredFallbacks, `ภาพยนตร์สำรองในหมวดหมู่ "${genreName}"`);
+                }
+            } catch (error) {
+                console.error("Genre filter failed:", error);
+                const filteredFallbacks = fallbackItems.filter(item => item.genre_ids && item.genre_ids.includes(genreId));
+                renderGrid(filteredFallbacks.length ? filteredFallbacks : fallbackItems, `หมวดหมู่ "${genreName}" (โหลดข้อมูลสำรอง)`);
+            }
+        }
 
         // 1. Fetch Trending movies and render Hero + Movie Grid
         async function fetchTrendingAndHero() {
             try {
-                // Fetch trending list
                 const res = await fetch(`${TMDB_BASE_URL}/trending/all/week?api_key=${TMDB_API_KEY}&language=th-TH`);
                 const data = await res.json();
-                const items = data.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
-
-                if (items && items.length > 0) {
-                    // Set Hero Movie (item[0])
-                    const hero = items[0];
-                    setupHero(hero);
-                    
-                    // Render rest to grid
-                    renderGrid(items, "ภาพยนตร์และซีรีส์ยอดนิยมประจำสัปดาห์");
+                
+                // Safety check: ตรวจสอบว่ามี data และ data.results หรือไม่
+                if (data && data.results && Array.isArray(data.results)) {
+                    const items = data.results.filter(item => item && (item.media_type === 'movie' || item.media_type === 'tv'));
+                    if (items.length > 0) {
+                        const hero = items[0];
+                        setupHero(hero);
+                        renderGrid(items, "ภาพยนตร์และซีรีส์ยอดนิยมประจำสัปดาห์");
+                        return;
+                    }
                 }
+                
+                // หากไม่มี data.results ให้รันระบบ Fallback เพื่อให้เว็บไม่โล่ง
+                setupHero(fallbackItems[0]);
+                renderGrid(fallbackItems, "รายการแนะนำยอดนิยม (ข้อมูลสำรองชั่วคราว)");
+                
             } catch (error) {
                 console.error("Error fetching trending metadata:", error);
-                showErrorMessage();
+                // Fallback rendering
+                setupHero(fallbackItems[0]);
+                renderGrid(fallbackItems, "รายการแนะนำยอดนิยม (ข้อมูลสำรองชั่วคราว)");
             }
         }
 
         // Setup featured Hero Banner
         function setupHero(movie) {
+            if (!movie) return;
             const title = movie.title || movie.name || "ไม่มีชื่อเรื่อง";
             const overview = movie.overview || "ไม่มีรายละเอียดภาษาไทยสำหรับเรื่องนี้ในระบบฐานข้อมูลหลัก";
             const backdrop = movie.backdrop_path ? `${BACKDROP_PATH}${movie.backdrop_path}` : 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1600&q=80';
@@ -251,7 +387,6 @@
             document.getElementById('heroOverview').innerText = overview;
 
             const playBtn = document.getElementById('heroPlayBtn');
-            // When play btn is clicked inside hero banner
             playBtn.onclick = () => {
                 playMedia(movie.id, movie.media_type || 'movie', title, movie.release_date || movie.first_air_date, movie.vote_average);
             };
@@ -264,7 +399,7 @@
             if (!query) return;
 
             currentQuery = query;
-            document.getElementById('heroSection').classList.add('hidden'); // Hide banner while search
+            document.getElementById('heroSection').classList.add('hidden'); 
             document.getElementById('sectionTitle').innerHTML = `
                 <i data-lucide="search" class="w-6 h-6 text-red-500"></i> ผลการค้นหาสำหรับ: <span class="text-red-500 ml-1">"${query}"</span>
             `;
@@ -273,10 +408,16 @@
             try {
                 const res = await fetch(`${TMDB_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=th-TH`);
                 const data = await res.json();
-                const results = data.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
-                renderGrid(results, `ผลการค้นหาสำหรับ "${query}"`);
+                
+                if (data && data.results && Array.isArray(data.results)) {
+                    const results = data.results.filter(item => item && (item.media_type === 'movie' || item.media_type === 'tv'));
+                    renderGrid(results, `ผลการค้นหาสำหรับ "${query}"`);
+                } else {
+                    renderGrid([], `ไม่พบผลการค้นหาสำหรับ "${query}"`);
+                }
             } catch (error) {
                 console.error("Search error:", error);
+                renderGrid([], `ขออภัย เกิดข้อผิดพลาดในการเชื่อมต่อคลังข้อมูล`);
             }
         }
 
@@ -286,16 +427,26 @@
             currentQuery = '';
             document.getElementById('searchInput').value = '';
             
+            // ล้างสถานะ active ของแนวเรื่องย่อย
+            document.querySelectorAll('.genre-btn').forEach((btn, index) => {
+                btn.className = index === 1 
+                    ? "genre-btn bg-red-600 text-white px-3 py-1 rounded-full whitespace-nowrap hover:bg-red-700 transition-all text-xs font-medium"
+                    : "genre-btn bg-gray-900 text-gray-300 px-3 py-1 rounded-full whitespace-nowrap hover:bg-gray-800 hover:text-white transition-all text-xs font-medium";
+            });
+
             const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => link.classList.remove('text-red-500'));
+            navLinks.forEach(link => {
+                link.classList.remove('text-red-500', 'bg-red-500/10');
+                link.classList.add('text-gray-300');
+            });
             
             if (type === 'all') {
-                navLinks[0].classList.add('text-red-500');
+                document.getElementById('nav-all').classList.add('text-red-500', 'bg-red-500/10');
                 document.getElementById('heroSection').classList.remove('hidden');
                 fetchTrendingAndHero();
             } else {
-                if (type === 'movie') navLinks[1].classList.add('text-red-500');
-                if (type === 'tv') navLinks[2].classList.add('text-red-500');
+                if (type === 'movie') document.getElementById('nav-movie').classList.add('text-red-500', 'bg-red-500/10');
+                if (type === 'tv') document.getElementById('nav-tv').classList.add('text-red-500', 'bg-red-500/10');
                 
                 document.getElementById('heroSection').classList.add('hidden');
                 
@@ -303,19 +454,70 @@
                     const res = await fetch(`${TMDB_BASE_URL}/${type}/popular?api_key=${TMDB_API_KEY}&language=th-TH&page=1`);
                     const data = await res.json();
                     
-                    // Standardize result object format
-                    const formatted = data.results.map(item => ({ ...item, media_type: type }));
-                    const label = type === 'movie' ? 'รวมภาพยนตร์มาแรง' : 'รวมซีรีส์/รายการทีวียอดฮิต';
-                    renderGrid(formatted, label);
+                    if (data && data.results && Array.isArray(data.results)) {
+                        const formatted = data.results.map(item => ({ ...item, media_type: type }));
+                        const label = type === 'movie' ? 'รวมภาพยนตร์มาแรงพรีเมียม' : 'รวมซีรีส์/รายการทีวียอดฮิต';
+                        renderGrid(formatted, label);
+                    } else {
+                        // ดึงเฉพาะเรื่องที่เป็นหนังหรือซีรีส์จาก Fallback
+                        const filteredFallback = fallbackItems.filter(item => item.media_type === type);
+                        renderGrid(filteredFallback, `รายการแนะนำ (${type === 'movie' ? 'ภาพยนตร์' : 'ซีรีส์'})`);
+                    }
                 } catch (error) {
                     console.error("Filter category failed:", error);
+                    const filteredFallback = fallbackItems.filter(item => item.media_type === type);
+                    renderGrid(filteredFallback, `รายการแนะนำ (${type === 'movie' ? 'ภาพยนตร์' : 'ซีรีส์'})`);
                 }
+            }
+        }
+
+        // 3.5 วิธีการดึงและแสดงอนิเมะโดยเฉพาะ (รวมข้อมูลสไตล์ Anime108)
+        async function setAnimeCategory() {
+            currentMediaType = 'anime';
+            currentQuery = '';
+            document.getElementById('searchInput').value = '';
+
+            // ไฮไลต์ปุ่มอนิเมะบน Navbar
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('text-red-500', 'bg-red-500/10');
+                link.classList.add('text-gray-300');
+            });
+            document.getElementById('nav-anime').classList.add('text-red-500', 'bg-red-500/10');
+
+            // ไฮไลต์ปุ่มประเภท "อนิเมะ/การ์ตูน" ในแถบกรอง (ID: 16)
+            document.querySelectorAll('.genre-btn').forEach(btn => {
+                if (btn.innerText === "อนิเมะ/การ์ตูน") {
+                    btn.className = "genre-btn bg-red-600 text-white px-3 py-1 rounded-full whitespace-nowrap hover:bg-red-700 transition-all text-xs font-medium";
+                } else {
+                    btn.className = "genre-btn bg-gray-900 text-gray-300 px-3 py-1 rounded-full whitespace-nowrap hover:bg-gray-800 hover:text-white transition-all text-xs font-medium";
+                }
+            });
+
+            document.getElementById('heroSection').classList.add('hidden');
+
+            try {
+                // ดึงรายการซีรีส์ที่เป็น Animation (Genre 16) และสัญชาติญี่ปุ่น (with_original_language=ja) ซึ่งจะทำให้ได้อนิเมะญี่ปุ่นแบบเน้นๆ เหมือน Anime108
+                const res = await fetch(`${TMDB_BASE_URL}/discover/tv?api_key=${TMDB_API_KEY}&with_genres=${ANIME_GENRE_ID}&with_original_language=ja&language=th-TH&sort_by=popularity.desc&page=1`);
+                const data = await res.json();
+                
+                if (data && data.results && Array.isArray(data.results)) {
+                    const formatted = data.results.map(item => ({ ...item, media_type: 'tv' }));
+                    renderGrid(formatted, "อนิเมะซีรีส์ยอดฮิต อัปเดตใหม่ล่าสุด (สไตล์ Anime108)");
+                } else {
+                    const animeFallback = fallbackItems.filter(item => item.genre_ids && item.genre_ids.includes(ANIME_GENRE_ID));
+                    renderGrid(animeFallback, "อนิเมะแนะนำ (ข้อมูลสำรอง)");
+                }
+            } catch (error) {
+                console.error("Error fetching Anime series:", error);
+                const animeFallback = fallbackItems.filter(item => item.genre_ids && item.genre_ids.includes(ANIME_GENRE_ID));
+                renderGrid(animeFallback, "อนิเมะแนะนำ (ข้อมูลสำรอง)");
             }
         }
 
         // Return Home state
         function goHome(e) {
-            e.preventDefault();
+            if (e) e.preventDefault();
             setCategory('all');
             document.getElementById('playerArea').classList.add('hidden');
             document.getElementById('videoIframe').src = '';
@@ -326,14 +528,14 @@
             const grid = document.getElementById('movieGrid');
             const titleEl = document.getElementById('sectionTitle');
             
-            // Set Section Title Text
             titleEl.querySelector('span').innerText = titleText;
 
-            if (movies.length === 0) {
+            // ตรวจสอบว่า movies เป็น Array หรือไม่
+            if (!movies || !Array.isArray(movies) || movies.length === 0) {
                 grid.innerHTML = `
                     <div class="col-span-full py-16 text-center text-gray-500">
                         <i data-lucide="frown" class="w-16 h-16 mx-auto mb-4 text-gray-600"></i>
-                        <p class="text-lg">ขออภัย ไม่พบรายการภาพยนตร์ที่คุณค้นหา</p>
+                        <p class="text-lg">ขออภัย ไม่พบรายการภาพยนตร์หรืออนิเมะที่คุณต้องการในขณะนี้</p>
                     </div>
                 `;
                 lucide.createIcons();
@@ -341,21 +543,29 @@
             }
 
             grid.innerHTML = movies.map(item => {
+                if (!item) return '';
                 const title = item.title || item.name || "ไม่มีชื่อเรื่อง";
                 const posterUrl = item.poster_path ? `${IMG_PATH}${item.poster_path}` : 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=500&q=80';
-                const typeLabel = item.media_type === 'tv' ? 'ซีรีส์' : 'ภาพยนตร์';
-                const typeColor = item.media_type === 'tv' ? 'bg-blue-600' : 'bg-red-600';
+                
+                let typeLabel = item.media_type === 'tv' ? 'ซีรีส์' : 'ภาพยนตร์';
+                let typeColor = item.media_type === 'tv' ? 'bg-blue-600' : 'bg-red-600';
+                
+                if (item.genre_ids && item.genre_ids.includes(ANIME_GENRE_ID)) {
+                    typeLabel = 'อนิเมะ';
+                    typeColor = 'bg-yellow-500 text-black';
+                }
+
                 const rating = item.vote_average ? item.vote_average.toFixed(1) : 'N/A';
                 const rawDate = item.release_date || item.first_air_date || '';
                 const year = rawDate ? rawDate.split('-')[0] : 'N/A';
 
                 return `
-                    <div onclick="playMedia(${item.id}, '${item.media_type}', '${title.replace(/'/g, "\\'")}', '${rawDate}', ${item.vote_average})" 
+                    <div onclick="playMedia(${item.id}, '${item.media_type || 'movie'}', '${title.replace(/'/g, "\\'")}', '${rawDate}', ${item.vote_average || 0})" 
                         class="group cursor-pointer bg-gray-900 rounded-lg overflow-hidden border border-gray-800 hover:border-red-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-red-500/10">
                         <div class="relative aspect-[2/3] overflow-hidden">
                             <img src="${posterUrl}" alt="${title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             <!-- Type Badge -->
-                            <span class="absolute top-2 left-2 ${typeColor} text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                            <span class="absolute top-2 left-2 ${typeColor} text-[10px] font-bold px-2 py-0.5 rounded">
                                 ${typeLabel}
                             </span>
                             <!-- Rating Badge -->
@@ -378,18 +588,15 @@
         async function playMedia(id, type, title, releaseDate, rating) {
             selectedMovie = { id, type, title, releaseDate, rating };
             
-            // Scroll to view player smoothly
             const playerArea = document.getElementById('playerArea');
             playerArea.classList.remove('hidden');
             playerArea.scrollIntoView({ behavior: 'smooth' });
 
-            // Display metadata details
             document.getElementById('playerTitle').innerText = title;
             document.getElementById('playerMetaDate').innerHTML = `<i data-lucide="calendar" class="w-4 h-4 text-red-500"></i> ${releaseDate || 'ไม่ระบุวันฉาย'}`;
             document.getElementById('playerMetaRating').innerHTML = `<i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-current"></i> ${rating ? rating.toFixed(1) : '0.0'}/10`;
-            document.getElementById('playerMetaType').innerHTML = `<i data-lucide="film" class="w-4 h-4 text-blue-500"></i> ${type === 'tv' ? 'ซีรีส์ / TV Show' : 'ภาพยนตร์ HD'}`;
+            document.getElementById('playerMetaType').innerHTML = `<i data-lucide="film" class="w-4 h-4 text-blue-500"></i> ${type === 'tv' ? 'อนิเมะซีรีส์ / TV Show' : 'ภาพยนตร์ HD'}`;
 
-            // Handle series vs movies selector state
             const seriesSelector = document.getElementById('seriesSelector');
             if (type === 'tv') {
                 seriesSelector.classList.remove('hidden');
@@ -402,7 +609,7 @@
             lucide.createIcons();
         }
 
-        // Fetch details for series (seasons and episodes count)
+        // Fetch details for series
         async function setupSeriesEpisodes(tvId) {
             try {
                 const res = await fetch(`${TMDB_BASE_URL}/tv/${tvId}?api_key=${TMDB_API_KEY}&language=th-TH`);
@@ -411,25 +618,39 @@
                 const seasonSelect = document.getElementById('seasonSelect');
                 seasonSelect.innerHTML = '';
                 
-                // Keep only valid seasons (some TV shows have season 0 for specials)
-                const validSeasons = data.seasons.filter(s => s.season_number > 0);
-                
-                if (validSeasons.length === 0 && data.seasons.length > 0) {
-                    validSeasons.push(data.seasons[0]);
-                }
+                if (data && data.seasons && Array.isArray(data.seasons)) {
+                    const validSeasons = data.seasons.filter(s => s && s.season_number > 0);
+                    
+                    if (validSeasons.length === 0 && data.seasons.length > 0) {
+                        validSeasons.push(data.seasons[0]);
+                    }
 
-                validSeasons.forEach(season => {
+                    validSeasons.forEach(season => {
+                        const opt = document.createElement('option');
+                        opt.value = season.season_number;
+                        opt.text = `${season.name} (${season.episode_count} ตอน)`;
+                        seasonSelect.appendChild(opt);
+                    });
+
+                    currentSeason = validSeasons[0] ? validSeasons[0].season_number : 1;
+                    await updateEpisodesList(tvId, currentSeason);
+                } else {
+                    // Fallback ถ้าไม่มีข้อมูลซีซัน
                     const opt = document.createElement('option');
-                    opt.value = season.season_number;
-                    opt.text = `${season.name} (${season.episode_count} ตอน)`;
+                    opt.value = 1;
+                    opt.text = `ซีซัน 1 (ข้อมูลสำรอง)`;
                     seasonSelect.appendChild(opt);
-                });
-
-                currentSeason = validSeasons[0] ? validSeasons[0].season_number : 1;
-                await updateEpisodesList(tvId, currentSeason);
+                    currentSeason = 1;
+                    await updateEpisodesList(tvId, 1);
+                }
 
             } catch (error) {
                 console.error("Error setting up series episodes dropdown:", error);
+                // Fallback default dropdown option
+                const seasonSelect = document.getElementById('seasonSelect');
+                seasonSelect.innerHTML = '<option value="1">ซีซัน 1 (ข้อมูลสำรอง)</option>';
+                currentSeason = 1;
+                await updateEpisodesList(tvId, 1);
             }
         }
 
@@ -442,17 +663,36 @@
                 const episodeSelect = document.getElementById('episodeSelect');
                 episodeSelect.innerHTML = '';
 
-                data.episodes.forEach(ep => {
-                    const opt = document.createElement('option');
-                    opt.value = ep.episode_number;
-                    opt.text = `ตอนที่ ${ep.episode_number} : ${ep.name || 'ไม่มีชื่อตอน'}`;
-                    episodeSelect.appendChild(opt);
-                });
+                if (data && data.episodes && Array.isArray(data.episodes)) {
+                    data.episodes.forEach(ep => {
+                        const opt = document.createElement('option');
+                        opt.value = ep.episode_number;
+                        opt.text = `ตอนที่ ${ep.episode_number} : ${ep.name || 'ไม่มีชื่อตอน'}`;
+                        episodeSelect.appendChild(opt);
+                    });
+                } else {
+                    for(let i=1; i<=12; i++) {
+                        const opt = document.createElement('option');
+                        opt.value = i;
+                        opt.text = `ตอนที่ ${i} (ข้อมูลสำรอง)`;
+                        episodeSelect.appendChild(opt);
+                    }
+                }
 
                 currentEpisode = 1;
                 updatePlayerUrl();
             } catch (error) {
                 console.error("Error updating episodes dropdown:", error);
+                const episodeSelect = document.getElementById('episodeSelect');
+                episodeSelect.innerHTML = '';
+                for(let i=1; i<=12; i++) {
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.text = `ตอนที่ ${i} (ข้อมูลสำรอง)`;
+                    episodeSelect.appendChild(opt);
+                }
+                currentEpisode = 1;
+                updatePlayerUrl();
             }
         }
 
@@ -472,18 +712,17 @@
         function changeSource(source) {
             selectedSource = source;
             
-            // Toggle highlight active button classes
             const btnVidsrc = document.getElementById('btnSrcVidsrc');
             const btnVidlink = document.getElementById('btnSrcVidlink');
             const btnXyz = document.getElementById('btnSrcXyz');
 
             [btnVidsrc, btnVidlink, btnXyz].forEach(btn => {
-                btn.className = "bg-gray-800 text-gray-300 text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-gray-700 transition";
+                if(btn) btn.className = "bg-gray-800 text-gray-300 text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-gray-700 transition";
             });
 
-            if (source === 'vidsrc') btnVidsrc.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
-            if (source === 'vidlink') btnVidlink.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
-            if (source === 'vidsrc_xyz') btnXyz.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
+            if (source === 'vidsrc' && btnVidsrc) btnVidsrc.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
+            if (source === 'vidlink' && btnVidlink) btnVidlink.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
+            if (source === 'vidsrc_xyz' && btnXyz) btnXyz.className = "bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:bg-red-700 transition";
 
             updatePlayerUrl();
         }
@@ -521,7 +760,7 @@
         function showErrorMessage() {
             document.getElementById('movieGrid').innerHTML = `
                 <div class="col-span-full py-16 text-center text-gray-400">
-                    <p class="text-lg">มีปัญหาในการเชื่อมต่อข้อมูล กรุณาลองใหม่อีกครั้งในภายหลัง</p>
+                    <p class="text-lg">มีปัญหาในการเชื่อมต่อข้อมูลของคลังอนิเมะและหนัง กรุณาลองใหม่อีกครั้งในภายหลัง</p>
                 </div>
             `;
         }
